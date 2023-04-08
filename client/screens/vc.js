@@ -18,7 +18,7 @@ export default function VC({navigation, route}) {
         </Text>
       </Pressable>
 
-      <Pressable style={styles.customer} onPress={() => {navigation.navigate('Startup')}}>
+      <Pressable style={styles.customer} onPress={() => {navigation.navigate('Signin')}}>
 
         <Text style={styles.buttonText}>
           Customer
