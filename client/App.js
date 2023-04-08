@@ -7,7 +7,7 @@ import VC from './screens/vc';
 import Signin from './screens/signin';
 import Profile from './screens/profile';
 import Cart from './screens/cart';
-
+import Address from './screens/address';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Signin" component={Signin}/>
         <Stack.Screen name="Profile" component={Profile}/>
         <Stack.Screen name="Cart" component={Cart}/>
+        <Stack.Screen name="Address" component={Address}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
