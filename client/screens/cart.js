@@ -95,7 +95,7 @@ export default CartScreen = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('VC')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('Address')}>
 
                 <Text style={styles.buttonText}>
                     Order Now
