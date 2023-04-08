@@ -6,6 +6,10 @@ export default function Signin({ navigation, route }) {
     return (
         <View style={styles.container}>
             <View style={styles.logocontainer}>
+                <Image
+                    style={styles.image}
+                    source={require('./../img/burgerlogo.jpg')}
+                />
                 <Pressable style={styles.SigninContainer} onPress={() => navigation.navigate('VC')}>
 
                     <Text style={styles.buttonText}>
@@ -33,7 +37,7 @@ const styles = StyleSheet.create({
         paddingBottom: 50
     },
     logocontainer: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FFEC5F',
         height: '40%',
         width: '100%',
         top: 0,
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
         top: '84.5%',
         left: '15%',
         justifyContent: 'center',
-        borderColor: '#EFB60E',
+        borderColor: 'black',
         borderBottomWidth: 4
     },
     SignupContainer: {
@@ -77,6 +81,13 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         fontSize: 20,
         fontWeight: '500'
+    },
+    image: {
+        width: 250,
+        height: 250,
+        resizeMode: 'contain',
+        top: 30,
+        alignSelf: 'center'
     }
 
 });

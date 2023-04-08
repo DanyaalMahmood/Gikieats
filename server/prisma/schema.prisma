@@ -36,4 +36,5 @@ model Item {
   availability String
   vendor       Vendor @relation(fields: [vendorid], references: [id])
   vendorid     String
+  category     String
 }
