@@ -5,8 +5,11 @@ export default function VC({navigation, route}) {
   return (
     
     <View style={styles.container}>
-      
-      <Text style={styles.text}>What are you?</Text>
+
+      <Image
+        style={styles.stretch}
+        source={require('./../img/restaurant1.png')}
+      />
 
  
       <Pressable style={styles.vendor} onPress={() => {navigation.navigate('Startup')}}>
@@ -67,9 +70,9 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
   stretch: {
-    width: 200,
-    height: 200,
+    width: 400,
+    height: 400,
     resizeMode: 'contain',
-    bottom: 250
+    bottom: 290
   }
 });
