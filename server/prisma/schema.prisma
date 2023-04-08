@@ -11,29 +11,29 @@ datasource db {
 }
 
 model User {
-  regno        String      @id
-  name      String
-  hostel    Int
-  email     String
-  phoneno   Int
-  password  String
+  regno    String @id
+  name     String
+  hostel   Int
+  email    String @unique
+  phoneno  String
+  password String
 }
 
 model Vendor {
-  id   String @id @default(uuid())
-  name String
+  id       String @id @default(uuid())
+  name     String
   password String
-  phoneno Int
-  items Item[]
+  phoneno  String
+  items    Item[]
 }
 
 model Item {
-  id String @id @default(uuid())
-  name String
-  description String
-  image String
-  price Int
+  id           String @id @default(uuid())
+  name         String
+  description  String
+  image        String
+  price        Int
   availability String
-  vendor Vendor @relation(fields: [vendorid], references: [id])
-  vendorid String
+  vendor       Vendor @relation(fields: [vendorid], references: [id])
+  vendorid     String
 }
