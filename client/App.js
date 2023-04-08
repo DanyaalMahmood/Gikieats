@@ -5,6 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Startup from './screens/startup';
 import VC from './screens/vc';
 import Signin from './screens/signin';
+import Profile from './screens/profile';
+import Cart from './screens/cart';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +18,8 @@ export default function App() {
         <Stack.Screen name="Startup" component={Startup}/>
         <Stack.Screen name="VC" component={VC}/>
         <Stack.Screen name="Signin" component={Signin}/>
+        <Stack.Screen name="Profile" component={Profile}/>
+        <Stack.Screen name="Cart" component={Cart}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
