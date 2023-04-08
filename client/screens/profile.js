@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
 
-export default PersonalDetailsPage = ({ navigation }) => {
+export default Profile = ({ navigation }) => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={24} color="black" />
@@ -68,7 +68,7 @@ export default PersonalDetailsPage = ({ navigation }) => {
                 <Text style={styles.buttonText}>Help</Text>
                 <Ionicons name="arrow-forward" size={24} color="black" />
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 };
 

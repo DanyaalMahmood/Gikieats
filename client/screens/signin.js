@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
-import { FullWindowOverlay } from 'react-native-screens';
+import { TabNavigationState } from '@react-navigation/native';
 
 export default function Signin({ navigation, route }) {
     return (
@@ -12,7 +12,7 @@ export default function Signin({ navigation, route }) {
                         Sign In
                     </Text>
                 </Pressable>
-                <Pressable style={styles.SignupContainer} onPress={() => navigation.navigate('Profile')}>
+                <Pressable style={styles.SignupContainer} onPress={() => navigation.navigate('UserHome')}>
 
                     <Text style={styles.buttonText}>
                         Sign Up
