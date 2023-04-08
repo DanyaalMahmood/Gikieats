@@ -12,19 +12,13 @@ export default function Signin({ navigation, route }) {
                         Sign In
                     </Text>
                 </Pressable>
-                <Pressable style={styles.SignupContainer} onPress={() => navigation.navigate('VC')}>
+                <Pressable style={styles.SignupContainer} onPress={() => navigation.navigate('Profile')}>
 
                     <Text style={styles.buttonText}>
                         Sign Up
                     </Text>
                 </Pressable>
             </View>
-
-
-
-
-
-
         </View>
     );
 }
