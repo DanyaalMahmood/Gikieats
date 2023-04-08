@@ -4,8 +4,9 @@ import { PrismaClient, Prisma } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { type } from "os";
 
 const secret = process.env.SECRET;
 
@@ -74,7 +75,7 @@ const userSignup = async (req: Request, res: Response) => {
         createdUser = await prisma.user.create({
             data: user
         });
-        
+
 
         if (typeof (secret) === "string") {
 
@@ -153,4 +154,44 @@ const userSignin = async (req: Request, res: Response) => {
 }
 
 
-export { userSignup, userSignin };
+
+const userCheck = async (req: Request, res: Response) => {
+    try {
+
+        const token = req.cookies.jwt;
+
+        if (token === null || typeof(secret) !== "string") {
+            res.status(400);
+            return res.json({ "error": "jwt error" });
+        }
+
+        let decode: any;
+
+        jwt.verify(token, secret, async (err: any, decodedToken: any) => {
+            if (err) {
+                return res.json({ "error": "Not a valid json token" });
+            } else {
+                decode = jwt.decode(token);
+            }
+        });
+
+            if(decode === undefined || decode.regno === undefined) return;
+            const regno = decode.regno;
+
+
+            //querying the data base for users on basis of the recieved number
+            const user = await prisma.user.findFirst({
+                where: {
+                    regno: regno,
+                },
+            });
+
+            res.json(user);
+        } catch (err) {
+            console.log(err);
+            res.status(400).json({ error: 'An error occured while signing in!' });
+        }
+    };
+
+
+    export { userSignup, userSignin, userCheck };
