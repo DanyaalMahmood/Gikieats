@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import userRouter from './routes/user';
+import itemRouter from './routes/items';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 
 
 app.use('/user', userRouter);
+app.use('/items', itemRouter);
 
 
 

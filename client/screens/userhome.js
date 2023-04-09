@@ -58,7 +58,6 @@ const Tabbar = ({state, navigation}) => {
         b3 = {...b3, ...styles.buttonSelected}
     }
     
-    console.log(currentRoute);
     return (
 
             <View style={styles.bottomNavigator}>
@@ -87,7 +86,7 @@ const Tabbar = ({state, navigation}) => {
 const styles = StyleSheet.create({
     bottomNavigator: {
         width: '100%',
-        height: '8%',
+        height: '9%',
         bottom: 0,
         position: 'absolute',
         backgroundColor: '#F2F2F2'
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
         left: 60,
         justifyContent: 'center',
         alignItems: 'center',
-        
+        bottom: 19
     },
     buttonSelected: {
         backgroundColor: '#EFB60E',
@@ -112,7 +111,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: '43%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        bottom: 19
     },
     button3: {
         width: 60,
@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 60,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        bottom: 19
     },
     image: {
         width: 25,
