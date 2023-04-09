@@ -8,21 +8,31 @@ import Signin from './screens/signin';
 import Cart from './screens/cart';
 import Address from './screens/address';
 import UserHome from './screens/userhome';
+import Map from './screens/map';
+import Vendor from './screens/vendor';
+import store from './store'
+import { Provider } from 'react-redux'
+
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Startup" component={Startup}/>
-        <Stack.Screen name="VC" component={VC}/>
-        <Stack.Screen name="Signin" component={Signin}/>
-        <Stack.Screen name="UserHome" component={UserHome}/>
-        <Stack.Screen name="Address" component={Address}/>
-        <Stack.Screen name="Cart" component={Cart}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Startup" component={Startup} />
+          <Stack.Screen name="VC" component={VC} />
+          <Stack.Screen name="Signin" component={Signin} />
+          <Stack.Screen name="UserHome" component={UserHome} />
+          <Stack.Screen name="Address" component={Address} />
+          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Map" component={Map}/>
+          <Stack.Screen name="Vendor" component={Vendor}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

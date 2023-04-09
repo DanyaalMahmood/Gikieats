@@ -1,8 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
-import { TabNavigationState } from '@react-navigation/native';
+import { useState } from 'react';
+import SIform from './siform';
+import SUform from './sufomr';
 
 export default function Signin({ navigation, route }) {
+    const [form, setForm] = useState('SI');
+
+    let sistyle = {}
+    let sustyle = {}
+
+    if(form === "SI") {
+        sistyle = {borderColor: 'black'}    
+    } else if(form === "SU") {
+        sustyle = {borderColor: 'black'}
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.logocontainer}>
@@ -10,20 +22,24 @@ export default function Signin({ navigation, route }) {
                     style={styles.image}
                     source={require('./../img/burgerlogo.jpg')}
                 />
-                <Pressable style={styles.SigninContainer} onPress={() => navigation.navigate('VC')}>
+                <Pressable style={{...styles.SigninContainer, ...sistyle}} onPress={() => setForm('SI')}>
 
                     <Text style={styles.buttonText}>
                         Sign In
                     </Text>
                 </Pressable>
-                <Pressable style={styles.SignupContainer} onPress={() => navigation.navigate('UserHome')}>
+                <Pressable style={{...styles.SignupContainer, ...sustyle}} onPress={() => setForm('SU')}>
 
                     <Text style={styles.buttonText}>
                         Sign Up
                     </Text>
                 </Pressable>
             </View>
+
+            {form==="SI" ? <SIform navigation={navigation}/>:<SUform navigation={navigation}/>}
+            
         </View>
+
     );
 }
 
@@ -34,7 +50,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F2F2',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingBottom: 50
+        paddingBottom: 50,
     },
     logocontainer: {
         backgroundColor: '#FFEC5F',
@@ -62,7 +78,7 @@ const styles = StyleSheet.create({
         top: '84.5%',
         left: '15%',
         justifyContent: 'center',
-        borderColor: 'black',
+        borderColor: '#FFEC5F',
         borderBottomWidth: 4
     },
     SignupContainer: {
@@ -72,7 +88,7 @@ const styles = StyleSheet.create({
         top: '84.5%',
         right: '15%',
         justifyContent: 'center',
-        borderColor: '#ffffff',
+        borderColor: '#FFEC5F',
         borderBottomWidth: 4
     },
     buttonText: {

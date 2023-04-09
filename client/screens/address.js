@@ -43,7 +43,7 @@ export default AddressScreen = ({ navigation }) => {
           onChangeText={setPhone}
         />
       </View>
-      <Pressable style={styles.button} onPress={() => navigation.navigate('Startup')}>
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Map')}>
 
                 <Text style={styles.buttonText}>
                     Confirm Address
