@@ -52,7 +52,7 @@ export default Screen2 = ({ navigation }) => {
             <View style={styles.maincontainer}>
                 {venders.map((item) => {
                     return (
-                        <Pressable onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item))}}>
+                        <Pressable key={item.id} onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item))}}>
                             <View style={styles.itemContainer}>
                                 <View style={styles.avatarContainer}>
                                     <Avatar
