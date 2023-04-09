@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../slices/user';
 import {BASEURL} from '@env';
 import axios from 'axios';
 
@@ -8,17 +10,19 @@ import axios from 'axios';
 export default function SIform({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    useEffect(() => {
-        console.log("run");
-    }, []);
+    const dispatch = useDispatch();
+
 
     const handleSubmit = async () => {
         try {
             const response = await axios.post(`${BASEURL}/user/signin`, {email, password});
-            console.log(response.data);
+            await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
+            navigation.navigate('UserHome');
         } catch (err) {
+            setError(err.response.data.error);
             console.log(err.response.data.error);
         }
     }
@@ -34,8 +38,10 @@ export default function SIform({navigation}) {
                 <Text>Password</Text>
                 <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)}/>
             </View>
+            <View style={styles.error}>
+                <Text style={styles.errortext}>{error}</Text>
+            </View>
             <Pressable style={styles.button} onPress={handleSubmit}>
-
                 <Text style={styles.buttonText}>
                     Sign In
                 </Text>
@@ -56,6 +62,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F2F2',
         borderBottomWidth: 1,
         height: 40
+    },
+    error: {
+        backgroundColor: '#F2F2F2',
+        height: 50,
+        bottom: 0,
+        justifyContent: 'center'
+    },
+    errortext: {
+        textAlign: 'center',
+        color: 'red',
+        fontWeight: '700'
     },
     email: {
         marginHorizontal: 30,
