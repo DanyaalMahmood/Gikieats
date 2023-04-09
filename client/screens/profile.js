@@ -7,6 +7,7 @@ import myicon from '../assets/myicon.png';
 
 export default Profile = ({ navigation }) => {
     return (
+
         <View style={{height: 750}} >
         <ScrollView style = {{flex: 1}} contentContainerStyle={{ flexGrow: 1 }}>
             

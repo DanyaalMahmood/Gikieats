@@ -5,23 +5,38 @@ import { Avatar } from 'react-native-elements';
 import burgericon from '../assets/burgericon.png';
 import pizzaicon from '../assets/pizzaicon.png';
 import spaghettiicon from '../assets/spaghettiicon.png';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { setVendor } from '../slices/vendor';
+import { useDispatch } from 'react-redux';
+import { BASEURL } from '@env';
 
-const CircleAvatar = ({ name, text, onPress }) => {
-    return (
-        <Pressable onPress={onPress}>
-            <Avatar
-                style={styles.avatar}
-                // size="large"
-                rounded
-                source={name}
-                containerStyle={styles.avatarContainer}
-            />
-            <Text style={styles.text}>{text}</Text>
-        </Pressable>
-    );
-};
+
+
 
 export default Screen2 = ({ navigation }) => {
+
+    const [venders, setVenders] = useState([]);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        fetchVendors();
+    }, [])
+
+
+    const fetchVendors = async () => {
+        try {
+            const response = await axios.get(`${BASEURL}/vendor`);
+            //console.log(response.data);
+            // await dispatch(setVendor(response.data[0]));
+            await setVenders(response.data);
+        } catch (err) {
+            console.log(err.response.data.error);
+        }
+    }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.appBar}>
@@ -34,60 +49,28 @@ export default Screen2 = ({ navigation }) => {
             </View>
 
             <View style={styles.maincontainer}>
-                <Pressable onPress={() => navigation.navigate('Startup')}>
-                    <View style={styles.itemContainer}>
-                        <View style={styles.avatarContainer}>
-                            <Avatar
-                                rounded
-                                size={80}
-                                source={burgericon}
-                                containerStyle={styles.avatar}
-                            />
-                            <View style={styles.textContainer}>
-                                <Text style={styles.avatarText}>Raju Restaurant</Text>
-                                <View style={styles.yellowContainer}>
-                                    <Text style={styles.yellowText}>TUC</Text>
+                {venders.map((item) => {
+                    return (
+                        <Pressable key={item.id} onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item))}}>
+                            <View style={styles.itemContainer}>
+                                <View style={styles.avatarContainer}>
+                                    <Avatar
+                                        rounded
+                                        size={80}
+                                        source={burgericon}
+                                        containerStyle={styles.avatar}
+                                    />
+                                    <View style={styles.textContainer}>
+                                        <Text style={styles.avatarText}>{item.name}</Text>
+                                        <View style={styles.yellowContainer}>
+                                            <Text style={styles.yellowText}>TUC</Text>
+                                        </View>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() => navigation.navigate('Startup')}>
-                    <View style={styles.itemContainer}>
-                        <View style={styles.avatarContainer}>
-                            <Avatar
-                                rounded
-                                size={80}
-                                source={pizzaicon}
-                                containerStyle={styles.avatar}
-                            />
-                            <View style={styles.textContainer}>
-                                <Text style={styles.avatarText}>Ayan Garden</Text>
-                                <View style={styles.yellowContainer}>
-                                    <Text style={styles.yellowText}>TUC</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Pressable>
-                <Pressable onPress={() => navigation.navigate('Startup')}>
-                    <View style={styles.itemContainer}>
-                        <View style={styles.avatarContainer}>
-                            <Avatar
-                                rounded
-                                size={80}
-                                source={spaghettiicon}
-                                containerStyle={styles.avatar}
-                            />
-                            <View style={styles.textContainer}>
-                                <Text style={styles.avatarText}>HotNSpicy</Text>
-                                <View style={styles.yellowContainer}>
-                                    <Text style={styles.yellowText}>TUC</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </Pressable>
+                        </Pressable>
+                    );
+                })}
             </View>
         </View>
     );
