@@ -59,10 +59,10 @@ export default FourthScreen = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Address')}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate('Startup')}>
 
                 <Text style={styles.buttonText}>
-                    Order Now
+                    Complete Order
                 </Text>
             </Pressable>
         </View>

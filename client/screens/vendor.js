@@ -15,6 +15,7 @@ import { BASEURL } from '@env';
 
 
 export default Screen2 = ({ navigation }) => {
+
     const [venders, setVenders] = useState([]);
 
     const dispatch = useDispatch();
@@ -34,8 +35,6 @@ export default Screen2 = ({ navigation }) => {
             console.log(err.response.data.error);
         }
     }
-
-
 
 
     return (
