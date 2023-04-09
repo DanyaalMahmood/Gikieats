@@ -15,6 +15,7 @@ import VendorSi from './screens/Vendor/vendorsignin';
 import Vform from './screens/Vendor/temp';
 import Vmenu from './screens/Vendor/vendormenu';
 import store from './store'
+import VendorHome from './screens/Vendor/vendorHome';
 import { Provider } from 'react-redux'
 
 
@@ -38,6 +39,7 @@ export default function App() {
           <Stack.Screen name="VendorSi" component={VendorSi}/>
           <Stack.Screen name="Vform" component={Vform}/>
           <Stack.Screen name="Vmenu" component={Vmenu}/>
+          <Stack.Screen name="VendorHome" component={VendorHome}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

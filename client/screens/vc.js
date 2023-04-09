@@ -12,7 +12,7 @@ export default function VC({navigation, route}) {
       />
 
  
-      <Pressable style={styles.vendor} onPress={() => {navigation.navigate('Vmenu')}}>
+      <Pressable style={styles.vendor} onPress={() => {navigation.navigate('VendorSi')}}>
         <Text style={styles.buttonText}>
           Vendor
         </Text>

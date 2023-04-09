@@ -22,7 +22,7 @@ export default Menu = ({ navigation }) => {
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/items/`);
+            const response = await axios.get(`${BASEURL}/Fastfood`);
             //console.log(response.data);
             // await dispatch(setVendor(response.data[0]));
             await setVenders(response.data);
