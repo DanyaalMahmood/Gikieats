@@ -9,6 +9,7 @@ import Cart from './screens/cart';
 import Address from './screens/address';
 import UserHome from './screens/userhome';
 import Map from './screens/map';
+import Vendor from './screens/vendor';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
         <Stack.Screen name="Address" component={Address}/>
         <Stack.Screen name="Cart" component={Cart}/>
         <Stack.Screen name="Map" component={Map}/>
+        <Stack.Screen name="Vendor" component={Vendor}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
