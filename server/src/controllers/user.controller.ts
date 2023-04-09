@@ -59,7 +59,8 @@ const userSignup = async (req: Request, res: Response) => {
         });
 
         if (users.length > 0) {
-            return res.status(400).json({ error: 'User with this regno already exists!' });
+            res.status(400)
+            return res.json({ error: 'User with this regno already exists!' });
         }
 
         users = await prisma.user.findMany({
@@ -69,7 +70,8 @@ const userSignup = async (req: Request, res: Response) => {
         });
 
         if (users.length > 0) {
-            return res.status(400).json({ error: 'User with this email already exists!' });
+            res.status(400)
+            return res.json({ error: 'User with this email already exists!' });
         }
 
         createdUser = await prisma.user.create({
@@ -108,6 +110,7 @@ const userSignup = async (req: Request, res: Response) => {
 
 const userSignin = async (req: Request, res: Response) => {
     const body: UserBody = req.body;
+    console.log('signin');
 
     if (body.email === undefined ||
         body.password === undefined) {
@@ -156,6 +159,8 @@ const userSignin = async (req: Request, res: Response) => {
 
 
 const userCheck = async (req: Request, res: Response) => {
+    console.log('check');
+
     try {
 
         const token = req.cookies.jwt;
