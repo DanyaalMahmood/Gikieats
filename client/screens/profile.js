@@ -8,11 +8,11 @@ export default Profile = ({ navigation }) => {
     return (
         <ScrollView style={styles.container}>
         <View style={{flex: 1}} >
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={styles.detailsHeader}>
                 <View style={styles.profiletext}>
                     <Text style={{ fontSize: 35, fontWeight: 'bold' }}>My Profile</Text>
