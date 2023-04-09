@@ -26,8 +26,9 @@ model Vendor {
   password String
   phoneno  String
   items    Item[]
-  menus    Menu[]
-  orders   Order[]
+ tafreed
+  riders   Rider[]
+
 }
 
 model Item {
@@ -40,29 +41,37 @@ model Item {
   vendor       Vendor @relation(fields: [vendorid], references: [id])
   vendorid     String
   category     String
+  Orders       OrderItem[]
 }
 
-model Menu {
-  id           String @id @default(uuid())
-  name         String
-  description  String
-  image        String
-  price        Int
-  vendorid_fk  Vendor  @relation(fields: [vendorid], references: [id])
-  vendorid     String
-  availability String
-  orders       Order[]
+
+model OrderItem {
+  id            String @id @default(uuid())
+  order_id      String
+  item          String
+  quantity      String
+  orderid_fk    Order @relation(fields: [order_id], references: [id])
+  itemId_fk     Item @relation(fields: [item], references: [id])
 }
 
 model Order {
   id             String  @id @default(uuid())
-  assigned       String
-  states         String
-  item_id        String
-  quantity       String
+
+  assigned       String  @default("22")
+  status         String
   userid         String
-  timestamp      DateTime @default(now())
-  assigned_fk    Vendor  @relation(fields: [assigned], references: [id])
-  item_id_fk     Menu  @relation(fields: [item_id], references: [id])
+  ordertime      String
+  assigned_fk    Rider  @relation(fields: [assigned], references: [id])
   userid_fk      User  @relation(fields: [userid], references: [regno])
+  orderitems     OrderItem[]
 }
+
+model Rider {
+  id             String @id @default(uuid())
+  name           String
+  phoneno        String
+  vendorid       String
+  vendorid_fk    Vendor @relation(fields: [vendorid], references: [id])
+  assigned       Order[]
+}
+
