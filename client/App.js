@@ -12,7 +12,7 @@ import Map from './screens/map';
 import Vendor from './screens/vendor';
 import Item from './screens/item';
 import VendorSi from './screens/Vendor/vendorsignin';
-import Vform from './screens/Vendor/temp';
+import Vform from './screens/Vendor/vendorform';
 import Vmenu from './screens/Vendor/vendormenu';
 import store from './store'
 import { Provider } from 'react-redux'
