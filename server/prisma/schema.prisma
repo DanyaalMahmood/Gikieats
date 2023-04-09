@@ -26,9 +26,7 @@ model Vendor {
   password String
   phoneno  String
   items    Item[]
- tafreed
   riders   Rider[]
-
 }
 
 model Item {
@@ -44,7 +42,6 @@ model Item {
   Orders       OrderItem[]
 }
 
-
 model OrderItem {
   id            String @id @default(uuid())
   order_id      String
@@ -56,7 +53,6 @@ model OrderItem {
 
 model Order {
   id             String  @id @default(uuid())
-
   assigned       String  @default("22")
   status         String
   userid         String
@@ -74,4 +70,3 @@ model Rider {
   vendorid_fk    Vendor @relation(fields: [vendorid], references: [id])
   assigned       Order[]
 }
-
