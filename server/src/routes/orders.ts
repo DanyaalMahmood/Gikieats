@@ -5,6 +5,6 @@ const orderRouter = express.Router();
 
 
 
-orderRouter.get('/desi', checkUser, createOrder)
+orderRouter.post('/', checkUser, createOrder)
 
 export default orderRouter;
