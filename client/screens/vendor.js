@@ -40,7 +40,7 @@ export default Screen2 = ({ navigation }) => {
             </View>
 
             <View style={styles.maincontainer}>
-                <Pressable onPress={() => navigation.navigate('Startup')}>
+                <Pressable onPress={() => navigation.navigate('UserHome')}>
                     <View style={styles.itemContainer}>
                         <View style={styles.avatarContainer}>
                             <Avatar
@@ -58,7 +58,7 @@ export default Screen2 = ({ navigation }) => {
                         </View>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => navigation.navigate('Startup')}>
+                <Pressable onPress={() => navigation.navigate('UserHome')}>
                     <View style={styles.itemContainer}>
                         <View style={styles.avatarContainer}>
                             <Avatar
@@ -76,7 +76,7 @@ export default Screen2 = ({ navigation }) => {
                         </View>
                     </View>
                 </Pressable>
-                <Pressable onPress={() => navigation.navigate('Startup')}>
+                <Pressable onPress={() => navigation.navigate('UserHome')}>
                     <View style={styles.itemContainer}>
                         <View style={styles.avatarContainer}>
                             <Avatar

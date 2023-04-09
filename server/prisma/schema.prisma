@@ -26,7 +26,6 @@ model Vendor {
   password String
   phoneno  String
   items    Item[]
- tafreed
   riders   Rider[]
 
 }
