@@ -7,18 +7,18 @@ import myicon from '../assets/myicon.png';
 export default Profile = ({ navigation }) => {
     return (
         <ScrollView style={styles.container}>
+        <View style={{flex: 1}} >
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
-            <View />
-        </View>
-        <View style={styles.detailsHeader}>
-            <View style= {styles.profiletext}>
-            <Text style={{ fontSize: 35, fontWeight: 'bold' }}>My Profile</Text>
             </View>
-        </View>
-        
+            <View style={styles.detailsHeader}>
+                <View style={styles.profiletext}>
+                    <Text style={{ fontSize: 35, fontWeight: 'bold' }}>My Profile</Text>
+                </View>
+            </View>
+
             <View style={styles.detailsHeader}>
                 <Text style={styles.detailsHeaderText}>Personal Details</Text>
                 <TouchableOpacity>
@@ -29,7 +29,7 @@ export default Profile = ({ navigation }) => {
                 <View style={styles.avatarContainer}>
                     <Avatar
                         rounded
-                        style = {styles.avatar}
+                        style={styles.avatar}
                         source={myicon}
                     />
                     <View style={styles.textContainer}>
@@ -68,6 +68,7 @@ export default Profile = ({ navigation }) => {
                 <Text style={styles.buttonText}>Help</Text>
                 <Ionicons name="arrow-forward" size={24} color="black" />
             </TouchableOpacity>
+        </View>
         </ScrollView>
     );
 };
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
         marginVertical: 14,
         width: 350,
         alignSelf: 'center',
-      },
+    },
     profiletext: {
         fontSize: 35,
         fontWeight: 'bold',
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
     },
     container: {
         top: 50,
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: '#F5F5F8',
     },
     header: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     detailsHeaderText: {
-        marginHorizontal:16,
+        marginHorizontal: 16,
         fontSize: 20,
         fontWeight: 'bold',
     },
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         // marginHorizontal: 16,
         marginVertical: 20,
-        
+
     },
     textContainer: {
         marginTop: 35,
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginBottom: 24,
         paddingVertical: 12,
-        paddingHorizontal:25,
+        paddingHorizontal: 25,
         top: 30,
         textAlignVertical: 'center',
     },
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
         alignContent: 'space-between',
         color: 'black',
         alignItems: 'flex-start',
-        fontSize:17,
+        fontSize: 17,
         fontWeight: '600'
     },
 },)
