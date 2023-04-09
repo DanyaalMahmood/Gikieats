@@ -108,6 +108,7 @@ const userSignup = async (req: Request, res: Response) => {
 
 const userSignin = async (req: Request, res: Response) => {
     const body: UserBody = req.body;
+    console.log('signin');
 
     if (body.email === undefined ||
         body.password === undefined) {
@@ -156,6 +157,8 @@ const userSignin = async (req: Request, res: Response) => {
 
 
 const userCheck = async (req: Request, res: Response) => {
+    console.log('check');
+
     try {
 
         const token = req.cookies.jwt;
