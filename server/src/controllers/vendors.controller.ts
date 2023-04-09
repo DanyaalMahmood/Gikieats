@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+
 import { PrismaClient, Prisma } from '@prisma/client'
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
@@ -186,6 +187,7 @@ const vendorCheck = async (req: Request, res: Response) => {
     }
 };
 
+
 const getVendors = async (req: Request, res: Response) => {
     try {
         const vendors = await prisma.vendor.findMany({
@@ -201,4 +203,6 @@ const getVendors = async (req: Request, res: Response) => {
     }
 }
 
+
 export { getVendors, vendorSignin, vendorCheck, vendorSignup };
+
