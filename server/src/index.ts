@@ -4,6 +4,7 @@ import userRouter from './routes/user';
 import itemRouter from './routes/items';
 import orderRouter from './routes/orders';
 import cookieParser from 'cookie-parser';
+import vendorRouter from './routes/vendor';
 
 const app = express();
 const port = process.env.PORT;
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/user', userRouter);
 app.use('/items', itemRouter);
 app.use('/order', orderRouter)
+app.use('/vendor', vendorRouter)
 
 
 
