@@ -7,8 +7,8 @@ const itemRouter = express.Router();
 
 
 
-itemRouter.get('/desi',checkUser, findDesi)
-itemRouter.get('/fastfood',checkUser, findFastFood)
-itemRouter.get('/other',checkUser, findOthers)
+itemRouter.get('/desi/:id',checkUser, findDesi)
+itemRouter.get('/fastfood/:id',checkUser, findFastFood)
+itemRouter.get('/other/:id',checkUser, findOthers)
 
 export default itemRouter;

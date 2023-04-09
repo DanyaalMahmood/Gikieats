@@ -4,11 +4,16 @@ import { PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient()
 
 
-const findDesi = async(req: Request, res: Response) => {
+const findDesi = async (req: Request, res: Response) => {
+  const vendorid = String(req.params.id);
   try {
     const desiItems = await prisma.item.findMany({
       where: {
-        category: 'desi'
+        AND: [
+          { category: 'desi' },
+          { vendorid: vendorid },
+          { availability: 'true' }
+        ]
       }
     })
     res.status(200).json(desiItems)
@@ -18,11 +23,17 @@ const findDesi = async(req: Request, res: Response) => {
 }
 
 
+
 const findFastFood = async(req: Request, res: Response) => {
+  const vendorid = String(req.params.id);
   try {
     const fastfoodItems = await prisma.item.findMany({
       where: {
-        category: 'fastfood'
+        AND: [
+          { category: 'fastfood' },
+          { vendorid: vendorid },
+          { availability: 'true' }
+        ]
       }
     })
     res.status(200).json(fastfoodItems)
@@ -33,10 +44,15 @@ const findFastFood = async(req: Request, res: Response) => {
 
 
 const findOthers = async(req: Request, res: Response) => {
+  const vendorid = String(req.params.id);
   try {
     const otherItems = await prisma.item.findMany({
       where: {
-        category: 'other'
+        AND: [
+          { category: 'desi' },
+          { vendorid: vendorid },
+          { availability: 'true' }
+        ]
       }
     })
     res.status(200).json(otherItems)
