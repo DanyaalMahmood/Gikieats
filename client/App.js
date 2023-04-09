@@ -10,6 +10,8 @@ import Address from './screens/address';
 import UserHome from './screens/userhome';
 import Map from './screens/map';
 import Vendor from './screens/vendor';
+import Item from './screens/item';
+import VendorSi from './screens/Vendor/vendorsignin';
 import store from './store'
 import { Provider } from 'react-redux'
 
@@ -30,6 +32,8 @@ export default function App() {
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Map" component={Map}/>
           <Stack.Screen name="Vendor" component={Vendor}/>
+          <Stack.Screen name="Item" component={Item}/>
+          <Stack.Screen name="VendorSi" component={VendorSi}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

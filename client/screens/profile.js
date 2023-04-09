@@ -1,76 +1,86 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
+// import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default Profile = ({ navigation }) => {
     return (
-        <ScrollView style={styles.container}>
-        <View style={{flex: 1}} >
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="black" />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.detailsHeader}>
-                <View style={styles.profiletext}>
-                    <Text style={{ fontSize: 35, fontWeight: 'bold' }}>My Profile</Text>
+        <View style={{height: 750}} >
+        <ScrollView style = {{flex: 1}} contentContainerStyle={{ flexGrow: 1 }}>
+            
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="arrow-back" size={24} color="black" />
+                    </TouchableOpacity>
                 </View>
-            </View>
-
-            <View style={styles.detailsHeader}>
-                <Text style={styles.detailsHeaderText}>Personal Details</Text>
-                <TouchableOpacity>
-                    <Text style={styles.detailsHeaderText2}>Change</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.avatarcontainerwrapper}>
-                <View style={styles.avatarContainer}>
-                    <Avatar
-                        rounded
-                        style={styles.avatar}
-                        source={myicon}
-                    />
-                    <View style={styles.textContainer}>
-                        <Text style={styles.nameText}>Muzamil Khatri</Text>
-                        <Text style={styles.emailText}>johndoe@gmail.com</Text>
-                        <Text style={styles.phoneText}>+92 321 8457 269</Text>
-                        <Text style={styles.locationText}>New York, NY</Text>
+                <View style={styles.detailsHeader}>
+                    <View style={styles.profiletext}>
+                        <Text style={{ fontSize: 35, fontWeight: 'bold' }}>My Profile</Text>
                     </View>
                 </View>
-            </View>
-            <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => navigation.navigate('VC')}
-            >
-                <Text style={styles.buttonText}>Orders</Text>
-                <Ionicons name="arrow-forward" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => navigation.navigate('VC')}
-            >
-                <Text style={styles.buttonText}>Pending reviews</Text>
-                <Ionicons name="arrow-forward" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => navigation.navigate('VC')}
-            >
-                <Text style={styles.buttonText}>Faq</Text>
-                <Ionicons name="arrow-forward" size={24} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => navigation.navigate('Cart')}
-            >
-                <Text style={styles.buttonText}>Help</Text>
-                <Ionicons name="arrow-forward" size={24} color="black" />
-            </TouchableOpacity>
-        </View>
+
+                <View style={styles.detailsHeader}>
+                    <Text style={styles.detailsHeaderText}>Personal Details</Text>
+                    <TouchableOpacity>
+                        <Text style={styles.detailsHeaderText2}>Change</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.avatarcontainerwrapper}>
+                    <View style={styles.avatarContainer}>
+                        <Avatar
+                            rounded
+                            style={styles.avatar}
+                            source={myicon}
+                        />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.nameText}>Muzamil Khatri</Text>
+                            <Text style={styles.emailText}>johndoe@gmail.com</Text>
+                            <Text style={styles.phoneText}>+92 321 8457 269</Text>
+                            <Text style={styles.locationText}>New York, NY</Text>
+                        </View>
+                    </View>
+                </View>
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => navigation.navigate('Item')}
+                >
+                    <Text style={styles.buttonText}>Orders</Text>
+                    <Ionicons name="arrow-forward" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => navigation.navigate('VC')}
+                >
+                    <Text style={styles.buttonText}>Pending reviews</Text>
+                    <Ionicons name="arrow-forward" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => navigation.navigate('VC')}
+                >
+                    <Text style={styles.buttonText}>Faq</Text>
+                    <Ionicons name="arrow-forward" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => navigation.navigate('Cart')}
+                >
+                    <Text style={styles.buttonText}>Help</Text>
+                    <Ionicons name="arrow-forward" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => navigation.navigate('Cart')}
+                >
+                    <Text style={styles.buttonText}>Help</Text>
+                    <Ionicons name="arrow-forward" size={24} color="black" />
+                </TouchableOpacity>
         </ScrollView>
+        </View>
     );
+
 };
 
 const styles = StyleSheet.create({
@@ -96,10 +106,11 @@ const styles = StyleSheet.create({
     },
     container: {
         top: 50,
-        flexGrow: 1,
+        // flexGrow: 1,
         backgroundColor: '#F5F5F8',
     },
     header: {
+        top: 30,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../slices/user';
+import { login } from '../../slices/user';
 import {BASEURL} from '@env';
 import axios from 'axios';
 
 
 
-export default function SIform({navigation}) {
+export default function VSIform({navigation}) {
     const [email, setEmail] = useState('maaz@gmail.com');
     const [password, setPassword] = useState('hello123');
     const [error, setError] = useState('');
@@ -31,7 +31,7 @@ export default function SIform({navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.email}>
-                <Text>Email Address</Text>
+                <Text>Phone Number</Text>
                 <TextInput style={styles.input} value={email} onChangeText={(text) => setEmail(text)}/>
             </View>
             <View style={styles.password}>

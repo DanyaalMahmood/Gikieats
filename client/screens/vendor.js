@@ -22,12 +22,6 @@ const CircleAvatar = ({ name, text, onPress }) => {
 };
 
 export default Screen2 = ({ navigation }) => {
-    // const handleAvatarPress = (name,nav) => {
-    //     console.log(`${name} avatar pressed`);
-    //     navigation.navigate(nav);
-    //     // Navigate to another screen using navigation.navigate() method
-    // };
-
     return (
         <View style={styles.container}>
             <View style={styles.appBar}>
