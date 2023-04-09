@@ -20,7 +20,7 @@ export default function VSIform({navigation}) {
             const response = await axios.post(`${BASEURL}/user/signin`, {email, password});
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
-            navigation.navigate('UserHome');
+            navigation.navigate('Vmenu');
         } catch (err) {
             setError(err.response.data.error);
             console.log(err.response.data.error);

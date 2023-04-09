@@ -12,6 +12,8 @@ import Map from './screens/map';
 import Vendor from './screens/vendor';
 import Item from './screens/item';
 import VendorSi from './screens/Vendor/vendorsignin';
+import Vform from './screens/Vendor/temp';
+import Vmenu from './screens/Vendor/vendormenu';
 import store from './store'
 import { Provider } from 'react-redux'
 
@@ -34,6 +36,8 @@ export default function App() {
           <Stack.Screen name="Vendor" component={Vendor}/>
           <Stack.Screen name="Item" component={Item}/>
           <Stack.Screen name="VendorSi" component={VendorSi}/>
+          <Stack.Screen name="Vform" component={Vform}/>
+          <Stack.Screen name="Vmenu" component={Vmenu}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
