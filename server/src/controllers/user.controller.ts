@@ -165,7 +165,7 @@ const userCheck = async (req: Request, res: Response) => {
 
         const token = req.cookies.jwt;
 
-        if (token === null || typeof(secret) !== "string") {
+        if (token === null || typeof (secret) !== "string") {
             res.status(400);
             return res.json({ "error": "jwt error" });
         }
@@ -180,23 +180,32 @@ const userCheck = async (req: Request, res: Response) => {
             }
         });
 
-            if(decode === undefined || decode.regno === undefined) return;
-            const regno = decode.regno;
+        if (decode === undefined || decode.regno === undefined) return;
+        const regno = decode.regno;
 
 
-            //querying the data base for users on basis of the recieved number
-            const user = await prisma.user.findFirst({
-                where: {
-                    regno: regno,
-                },
-            });
+        //querying the data base for users on basis of the recieved number
+        const user = await prisma.user.findFirst({
+            where: {
+                regno: regno,
+            },
+        });
 
-            res.json(user);
-        } catch (err) {
-            console.log(err);
-            res.status(400).json({ error: 'An error occured while signing in!' });
-        }
-    };
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: 'An error occured while signing in!' });
+    }
+};
 
+const userSignOut = async (req: Request, res: Response) => {
+    try {
+        res.clearCookie("jwt");
+        res.json({ "message": "You are logged out successfully!" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
 
-    export { userSignup, userSignin, userCheck };
+export { userSignup, userSignin, userCheck, userSignOut };
