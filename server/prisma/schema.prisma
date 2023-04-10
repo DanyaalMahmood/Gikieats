@@ -27,6 +27,7 @@ model Vendor {
   phoneno  String
   items    Item[]
   riders   Rider[]
+  orders   Order[]
 }
 
 model Item {
@@ -57,9 +58,12 @@ model Order {
   status         String
   userid         String
   ordertime      String
+  vendorid       String
+  vendor_fk      Vendor @relation(fields: [vendorid], references:[id])
   assigned_fk    Rider  @relation(fields: [assigned], references: [id])
   userid_fk      User  @relation(fields: [userid], references: [regno])
   orderitems     OrderItem[]
+  
 }
 
 model Rider {
