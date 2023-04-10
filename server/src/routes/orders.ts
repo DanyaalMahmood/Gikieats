@@ -5,6 +5,7 @@ const orderRouter = express.Router();
 
 
 
-orderRouter.post('/', checkUser, createOrder)
+orderRouter.post('/', checkUser, createOrder);
+
 
 export default orderRouter;
