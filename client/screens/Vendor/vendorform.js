@@ -1,10 +1,13 @@
+
 import { StyleSheet, Text, View, Button, Pressable, 
     Image, TextInput, ScrollView,Switch,TouchableOpacity } from 'react-native';
+
 import { useState } from 'react';
 import VSIform from './vsiform';
 import VSUform from './vsuform';
 
 export default function Vendorsignin({ navigation, route }) {
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
@@ -18,6 +21,7 @@ export default function Vendorsignin({ navigation, route }) {
         // Navigate back to the menu screen
         navigation.goBack();
     };
+
     const [form, setForm] = useState('VSI');
 
     let sistyle = {}
@@ -34,6 +38,7 @@ export default function Vendorsignin({ navigation, route }) {
             <View style={styles.logocontainer}>
                 <Image
                     style={styles.image}
+
                     source={require('./../../assets/noodles.jpg')}
                 />
             </View>
@@ -100,6 +105,7 @@ export default function Vendorsignin({ navigation, route }) {
                     </Text>
                 </Pressable>
             </View>
+
         </View>
 
     );
@@ -115,7 +121,9 @@ const styles = StyleSheet.create({
         paddingBottom: 50,
     },
     logocontainer: {
+
         backgroundColor: '#FFCC82',
+
         height: '40%',
         width: '100%',
         top: 0,
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 20,
         shadowColor: 'black',
     },
-    
+
     SigninContainer: {
         width: 120,
         height: 50,
@@ -158,6 +166,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         top: 30,
         alignSelf: 'center'
+
     },
     nestedcontainer: {
         flex: 1,
@@ -249,6 +258,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff'
         backgroundColor: '#FFCC82',
     },
+
 
 
 });

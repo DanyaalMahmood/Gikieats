@@ -1,77 +1,49 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable } from 'react-native';
-import { Avatar } from 'react-native-elements';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import myicon from '../assets/myicon.png';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import { BASEURL } from '@env';
+import { useIsFocused } from '@react-navigation/native'
 
+import Fastfood from './../menuScreens/fastfood';
+import Desifood from './../menuScreens/desifood';
+import Otheritems from './../menuScreens/otheritems';
+import { SetItem } from '../../slices/item';
 
-import Fastfood from './menuScreens/fastfood';
-import Desifood from './menuScreens/desifood';
-import Otheritems from './menuScreens/otheritems';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useIsFocused } from '@react-navigation/native';
-import fastfood from './menuScreens/fastfood';
-
-export default Menu = ({ navigation }) => {
-    const [search, setSearch] = useState('');
-    const [category, setCategory] = useState('fastfood');
+export default VendorList = ({ navigation, route }) => {
+    const [search, setSearch] = useState('Search');
     const [items, setItems] = useState([]);
     const [fetcheditems, fetchedsetItems] = useState([]);
+    //const state = useSelector((state) => state.vendor);
 
     const isFocused = useIsFocused();
 
-    const vendor = useSelector((state) => state.vendor);
-    console.log(vendor);
-
     useEffect(() => {
-        if (isFocused) {
+        if(isFocused) {
             fetchItems();
-            console.log('use effect on initial mount in user home');
+            console.log('use effect on initial mount');
         };
     }, [isFocused]);
-    useEffect(() => {
-        fetchItems();
-    }, [category]);
 
     const dispatch = useDispatch();
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/items/${category}/${vendor.id}`);
+            const response = await axios.get(`${BASEURL}/items`);
             //console.log(response.data);
             // await dispatch(setVendor(response.data[0]));
             //await setVenders(response.data);
             await setItems(response.data);
             await fetchedsetItems(response.data);
-
+            //console.log(response.data[0], 'hellooooo');
         } catch (err) {
             //console.log(err);
             console.log(err.response.data.error);
         }
     };
-
-
-
-
-    let b1;
-    let b2;
-    let b3;
-
-    let currentCategory = <></>;
-    if (category === 'fastfood') {
-        currentCategory = <Fastfood />;
-        b1 = { borderColor: '#EFB60E' };
-    } else if (category === 'desi') {
-        currentCategory = <Desifood />;
-        b2 = { borderColor: '#EFB60E' };
-    } else {
-        currentCategory = <Otheritems />;
-        b3 = { borderColor: '#EFB60E' };
-    }
 
     const onSearch = (text) => {
         if(text === "") {
@@ -83,7 +55,6 @@ export default Menu = ({ navigation }) => {
         console.log('fitems', fetcheditems)
         setItems(newitems);
     }
-
 
 
     return (
@@ -98,39 +69,34 @@ export default Menu = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>Delicious             food for you</Text>
+                    <Text style={styles.titleText}>Your Food                          Items</Text>
                 </View>
                 <View style={styles.search}>
                     <Ionicons name="search-outline" size={32} color="black" />
-                    <TextInput style={styles.searchinput} onChangeText={onSearch} placeholder='Search' />
+                    <TextInput style={styles.searchinput} onChangeText={onSearch} />
                 </View>
-                <View style={styles.categoriesContainer}>
-                    <TouchableOpacity onPress={() => setCategory('fastfood')}>
-                        <View style={{ ...styles.categoriesbox, ...b1 }}>
-                            <Text style={styles.categoriesText}>Fast Food</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCategory('desi')}>
-                        <View style={{ ...styles.categoriesbox, ...b2 }}>
-                            <Text style={styles.categoriesText}>Desi Food</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCategory('other')}>
-                        <View style={{ ...styles.categoriesbox, ...b3 }}>
-                            <Text style={styles.categoriesText}>Other Items</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+
+                {/* <Pressable style={styles.itemss} onPress={() => alert("helloooo")}>
+                        <Text style={{fontSize:26}}>Pizza Sandwich</Text>
+                        <Text style={{fontSize:20, fontWeight:'bold'}}>Rs 700</Text>
+                </Pressable> */}
 
 
                 {items.map((item) => {
                     return (
-                        <Pressable key={item.id} style={styles.itemss} onPress={() => { navigation.navigate('Vendoritemform'); dispatch(SetItem(item)) }}>
+                        <Pressable key={item.id} style={styles.itemss} onPress={() => {navigation.navigate('Vendoritemform'); dispatch(SetItem(item))}}>
                             <Text style={{ fontSize: 26 }}>{item.name}</Text>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>
                         </Pressable>
                     )
                 })}
+
+                <Pressable style={styles.button} onPress={() => {navigation.navigate('Vendornewitemform')}}>
+                    <Text style={styles.buttonText}>
+                        Add New Item
+                    </Text>
+                </Pressable>
+
             </ScrollView>
         </View>
     );
@@ -139,9 +105,24 @@ export default Menu = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         top: 40,
-        height: 740,
+        height: 740
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 25,
+        paddingVertical: 10,
+        height: 80
+    },
+    title: {
         backgroundColor: '#F2F2F2',
-
+        paddingHorizontal: 25,
+        height: 100
+    },
+    titleText: {
+        fontSize: 40,
+        fontWeight: 'bold'
     },
     itemss: {
         flexDirection: 'row',
@@ -154,22 +135,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginVertical: 15
     },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 25,
-        paddingVertical: 10
-    },
-    title: {
-        backgroundColor: '#F2F2F2',
-        paddingHorizontal: 25,
-        height: 100
-    },
-    titleText: {
-        fontSize: 40,
-        fontWeight: 'bold'
-    },
     search: {
         backgroundColor: '#D8D8D8',
         height: 50,
@@ -178,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 14,
-        marginBottom: 10,
+        marginBottom: 30,
         marginTop: 10
     },
     searchinput: {
@@ -189,10 +154,10 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     categoriesContainer: {
-        //backgroundColor: 'transparent',
         backgroundColor: 'transparent',
         flexDirection: 'row',
-        height: 50,
+        height: '4%',
+        marginTop: 30,
         marginBottom: 10,
         justifyContent: 'space-between',
         paddingHorizontal: 25,
@@ -208,5 +173,21 @@ const styles = StyleSheet.create({
     },
     categoriesText: {
         fontSize: 14,
-    }
+    },
+    button: {
+        backgroundColor: '#EFB60E',
+        borderRadius: 30,
+        width: '90%',
+        height: 75,
+        marginVertical: 20,
+        marginBottom: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: '500'
+    },
 })

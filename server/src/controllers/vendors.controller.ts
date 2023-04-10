@@ -70,7 +70,7 @@ const vendorSignup = async (req: Request, res: Response) => {
 
         if (typeof (secret) === "string") {
 
-            const tokenbody = { name: createdVendor.name, phoneno: createdVendor.phoneno };
+            const tokenbody = { name: createdVendor.name, vendorid: createdVendor.phoneno };
             const token = await jwt.sign(tokenbody, secret, {
                 expiresIn: 3 * 24 * 60 * 60,
             });
@@ -99,7 +99,7 @@ const vendorSignup = async (req: Request, res: Response) => {
 
 const vendorSignin = async (req: Request, res: Response) => {
     const body: VendorBody = req.body;
-    console.log('signin');
+    //console.log('signin', req.body);
 
     if (body.phoneno === undefined ||
         body.password === undefined) {
@@ -114,6 +114,8 @@ const vendorSignin = async (req: Request, res: Response) => {
                 phoneno: body.phoneno,
             },
         });
+
+        //console.log('Vendors', vendors);
 
         if (vendors.length === 0) {
             return res.status(400).json({ error: 'No vendor with this phone number exists!' });
@@ -148,7 +150,7 @@ const vendorSignin = async (req: Request, res: Response) => {
 
 
 const vendorCheck = async (req: Request, res: Response) => {
-    console.log('check');
+    //console.log('check');
 
     try {
 
