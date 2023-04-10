@@ -8,7 +8,6 @@ import {
     TextInput,
     Switch,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 
 export default Vendorform = ({ navigation }) => {
@@ -84,15 +83,7 @@ export default Vendorform = ({ navigation }) => {
                             thumbColor={available ? '#EFB60E' : '#f4f3f4'}
                         />
                     </View>
-                    { /*<Picker
-                        selectedValue={category}
-                        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
-                    >
-                        <Picker.Item label="Fast Food" value="fastfood" />
-                        <Picker.Item label="Desi" value="desi" />
-                        <Picker.Item label="Others" value="others" />
-                    </Picker>
-                   */}
+                   
                     <Text style={styles.label}>Category:</Text>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
