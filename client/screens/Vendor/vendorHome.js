@@ -41,7 +41,7 @@ const Tabbar = ({state, navigation}) => {
                         source={require('./../../img/homeicon.png')}
                     />
                 </Pressable>
-                <Pressable style={b3} onPress={() => navigation.navigate('Profile')}>
+                <Pressable style={b3} onPress={() => navigation.navigate('History')}>
                     <Image
                         style={styles.image}
                         source={require('./../../img/historyicon.png')}

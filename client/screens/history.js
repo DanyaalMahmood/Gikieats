@@ -15,74 +15,60 @@ import Otheritems from './menuScreens/otheritems';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
 import fastfood from './menuScreens/fastfood';
+import { fonts } from 'react-native-elements/dist/config';
 
 export default History = ({ navigation }) => {
     const [search, setSearch] = useState('');
-    const [category, setCategory] = useState('fastfood');
-    const [items, setItems] = useState([]);
-    const [fetcheditems, fetchedsetItems] = useState([]);
+    const [history, setHistory] = useState([]);
+    //const [fetcheditems, fetchedsetItems] = useState([]);
 
     const isFocused = useIsFocused();
 
     const vendor = useSelector((state) => state.vendor);
-    console.log(vendor);
+    //console.log(vendor);
 
     useEffect(() => {
         if (isFocused) {
-            fetchItems();
+            fetchHistory();
             console.log('use effect on initial mount in user home');
         };
     }, [isFocused]);
+
     useEffect(() => {
-        fetchItems();
-    }, [category]);
+        console.log('history', history);
+    }, [history]);
+
 
     const dispatch = useDispatch();
 
-    const fetchItems = async () => {
+    const fetchHistory = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/items/${category}/${vendor.id}`);
+            const response = await axios.get(`${BASEURL}/order/history`);
             //console.log(response.data);
             // await dispatch(setVendor(response.data[0]));
             //await setVenders(response.data);
-            await setItems(response.data);
-            await fetchedsetItems(response.data);
+            await setHistory(response.data);
+            //wait fetchedsetItems(response.data);
+            //console.log(response.data, "history");
 
         } catch (err) {
-            //console.log(err);
+            console.log(err);
             console.log(err.response.data.error);
         }
     };
 
 
 
-
-    let b1;
-    let b2;
-    let b3;
-
-    let currentCategory = <></>;
-    if (category === 'fastfood') {
-        currentCategory = <Fastfood />;
-        b1 = { borderColor: '#EFB60E' };
-    } else if (category === 'desi') {
-        currentCategory = <Desifood />;
-        b2 = { borderColor: '#EFB60E' };
-    } else {
-        currentCategory = <Otheritems />;
-        b3 = { borderColor: '#EFB60E' };
-    }
-
-    const onSearch = (text) => {
-        if (text === "") {
-            setItems(fetchItems);
-        }
-        console.log(text, 'text');
-        let newitems = fetcheditems.filter((item) => item.name.toLowerCase().search(text.toLowerCase()) !== -1);
-        console.log('newitem', newitems)
-        console.log('fitems', fetcheditems)
-        setItems(newitems);
-    }
+    // const onSearch = (text) => {
+    //     if (text === "") {
+    //         setItems(fetchItems);
+    //     }
+    //     console.log(text, 'text');
+    //     let newitems = fetcheditems.filter((item) => item.name.toLowerCase().search(text.toLowerCase()) !== -1);
+    //     console.log('newitem', newitems)
+    //     console.log('fitems', fetcheditems)
+    //     setItems(newitems);
+    // }
 
 
 
@@ -107,19 +93,26 @@ export default History = ({ navigation }) => {
                     <Text style={styles.titleText}>History</Text>
                 </View>
                 <View style={styles.divider} />
-                {items.map((item) => {
+                {history.map((item) => {
                     return (
-                        <Pressable key={item.id} style={styles.itemss} onPress={() => { navigation.navigate('Vendoritemform'); dispatch(SetItem(item)) }}>
-                            <View style={styles.row}>
-                                <Text style={{ fontSize: 26 }}>{item.name}</Text>
-                                {/*<Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>*/}
-                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>x2</Text>
+                        <Pressable key={item.id} style={styles.itemss} onPress={() => { null }}>
+                            <View>
+                                <Text style={{fontSize: 10}}>{item.id}</Text>
                             </View>
-                            <View style={styles.row}>
-                                <Text style={{ fontSize: 26 }}>{item.name}</Text>
-                                {/*<Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>*/}
-                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>x2</Text>
-                            </View>
+                            {item.orderitems.map((order) => {
+                                return (
+                                    <View style={styles.itemouter}>
+
+                                        <View style={styles.individualItem}>
+                                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{order.itemId_fk.name}</Text>
+                                            <Text style={{ fontSize: 20 }}>x {order.quantity}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={{ fontWeight: 'bold', color: '#EFB60E', fontSize: 16 }}>Rs {order.itemId_fk.price * order.quantity}</Text>
+                                        </View>
+                                    </View>
+                                )
+                            })}
                         </Pressable>
                     )
                 })}
@@ -141,6 +134,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F2F2',
 
     },
+    individualItem: {
+        //backgroundColor: 'pink',
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 5
+    },
+    itemouter: {
+        backgroundColor: 'transparent',
+        marginVertical: 10
+    },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -149,17 +153,21 @@ const styles = StyleSheet.create({
         // height: 150,
         // marginRight: 20,
 
-      },
-      itemss: {
-        flexDirection: 'column',
-        backgroundColor: '#D8D8D8',
-        marginHorizontal: 25,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        marginVertical: 15,
-      },
+    },
+    itemss: {
+        backgroundColor: '#FFF',
+        width: 350,
+        alignSelf: 'center',
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        borderRadius: 30,
+        marginVertical: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 20
+    },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',

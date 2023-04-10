@@ -28,10 +28,9 @@ const getVendor = async (req: Request, res: Response) => {
             }
         });
 
-
-
-
-        if (decode === undefined || decode.phoneno === undefined) return;
+        if (decode === undefined || decode.phoneno === undefined) {
+            return;
+        }
         const phoneno = decode.phoneno;
 
 
@@ -184,9 +183,14 @@ const updateOrderStatus = async (req: Request, res: Response) => {
 const getHistory = async (req: Request, res: Response) => {
     try {
         const phoneno = await getVendor(req, res);
+    
+        if(phoneno === undefined) {
+            return res.status(404).json({error: 'You are not a Vendor'});
+        }
+
         const vendor = await prisma.vendor.findFirst({
             where: {
-                phoneno: phoneno
+                phoneno: undefined
             },
         });
 
@@ -199,6 +203,13 @@ const getHistory = async (req: Request, res: Response) => {
             where: {
                 vendorid: vendorId,
             },
+            include: {
+                orderitems: {
+                    include: {
+                        itemId_fk: true
+                    }
+                },
+            }
         });
 
         return res.json(orders);

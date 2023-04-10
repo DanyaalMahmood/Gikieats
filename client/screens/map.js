@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         fontWeight: '200'
     },
     text2: {
-        fontsize :20,
+        fontSize :20,
         fontWeight: '500',
     },
     text3: {
