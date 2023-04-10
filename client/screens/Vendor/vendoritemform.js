@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function Vendoritemform({ navigation, route }) {
     const [form, setForm] = useState('VSI');
     const [item, setItem] = useState({});
-    const setitem = useSelector((state) => state.item)
+    const setitem = useSelector((state) => state.item);
     console.log(setitem, 'item')
 
 

@@ -39,6 +39,7 @@ export default function App() {
           <Stack.Screen name="Vendor" component={Vendor}/>
           <Stack.Screen name="Item" component={Item}/>
           <Stack.Screen name="VendorSi" component={VendorSi}/>
+          <Stack.Screen name="VendorHome" component={VendorHome}/>
 
           <Stack.Screen name="Vendoritemform" component={Vendoritemform}/>
           <Stack.Screen name="Vendornewitemform" component={Vendornewitemform}/>
