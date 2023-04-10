@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, ScrollV
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
+import axios from 'axios';
+import { BASEURL } from '@env';
 
 import Fastfood from './../menuScreens/fastfood';
 import Desifood from './../menuScreens/desifood';
@@ -11,20 +12,29 @@ import Otheritems from './../menuScreens/otheritems';
 
 export default VendorList = ({ navigation }) => {
     const [search, setSearch] = useState('Search');
-    const [category, setCategory] = useState('Fast Food');
     const [items, setItems] = useState([]);
-    const state = useSelector((state) => state.vendor);
-    console.log(state);
+    //const state = useSelector((state) => state.vendor);
+
+    useEffect(() => {
+        fetchItems();
+    }, []);
+
+    useEffect(() => {
+        console.log(items);
+    }, [items]);
 
 
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/Fastfood`);
+            const response = await axios.get(`${BASEURL}/items`);
             //console.log(response.data);
             // await dispatch(setVendor(response.data[0]));
-            await setVenders(response.data);
+            //await setVenders(response.data);
+            await setItems(response.data);
+            //console.log(response.data[0], 'hellooooo');
         } catch (err) {
+            //console.log(err);
             console.log(err.response.data.error);
         }
     };
@@ -56,7 +66,7 @@ export default VendorList = ({ navigation }) => {
                         <Text style={{fontSize:20, fontWeight:'bold'}}>Rs 700</Text>
                 </Pressable>
 
-                <Pressable style={styles.button} onPress={null}>
+                <Pressable style={styles.button} onPress={fetchItems}>
                     <Text style={styles.buttonText}>
                         Add New Item
                     </Text>

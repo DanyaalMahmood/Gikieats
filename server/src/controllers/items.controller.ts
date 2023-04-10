@@ -20,21 +20,25 @@ const getVendor = async (req: Request, res: Response) => {
 
     let decode: any;
 
-    jwt.verify(token, secret, async (err: any, decodedToken: any) => {
+    await jwt.verify(token, secret, async (err: any, decodedToken: any) => {
       if (err) {
         res.json({ "error": "Not a valid json token" });
         return false;
       } else {
-        decode = jwt.decode(token);
+        decode = await jwt.decode(token);
       }
     });
 
-    if (decode === undefined || decode.regno === undefined) return;
+    
+
+
+    if (decode === undefined || decode.phoneno === undefined) return;
     const phoneno = decode.phoneno;
+
 
     return phoneno;
   } catch (err) {
-    console.log(err);
+
     res.status(400).json({ error: 'An error occured while signing in!' });
   }
 };
@@ -84,7 +88,7 @@ const findOthers = async (req: Request, res: Response) => {
     const otherItems = await prisma.item.findMany({
       where: {
         AND: [
-          { category: 'desi' },
+          { category: 'other' },
           { vendorid: vendorid },
           { availability: 'true' }
         ]

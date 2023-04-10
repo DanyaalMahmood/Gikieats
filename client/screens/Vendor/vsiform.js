@@ -8,8 +8,8 @@ import axios from 'axios';
 
 
 export default function VSIform({navigation}) {
-    const [password, setPassword] = useState('');
-    const [phoneno, setPhoneno] = useState('');
+    const [password, setPassword] = useState('hello123');
+    const [phoneno, setPhoneno] = useState('0305009988');
     const [name, setName] = useState('');
 
     const [error, setError] = useState('');
