@@ -75,7 +75,7 @@ const Tabbar = ({state, navigation}) => {
                         source={require('./../img/profileicon.png')}
                     />
                 </Pressable>
-                <Pressable style={b3} onPress={() => navigation.navigate('Test3')}>
+                <Pressable style={b3} onPress={() => navigation.navigate('History')}>
                     <Image
                         style={styles.image}
                         source={require('./../img/historyicon.png')}

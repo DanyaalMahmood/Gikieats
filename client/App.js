@@ -20,6 +20,7 @@ import VendorHome from './screens/Vendor/vendorHome';
 import { Provider } from 'react-redux'
 import Vendoritemform from './screens/Vendor/vendoritemform';
 import Vendornewitemform from './screens/Vendor/vendornewitemform';
+import History from './screens/history.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,8 @@ export default function App() {
 
           <Stack.Screen name="Vendoritemform" component={Vendoritemform}/>
           <Stack.Screen name="Vendornewitemform" component={Vendornewitemform}/>
+          <Stack.Screen name="History" component={History}/>
+
 
 
         </Stack.Navigator>
