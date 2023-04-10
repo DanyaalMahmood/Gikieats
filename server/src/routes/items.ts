@@ -1,5 +1,5 @@
 import express from 'express';
-import { findDesi } from '../controllers/items.controller';
+import { createItem, findDesi } from '../controllers/items.controller';
 import { findFastFood } from '../controllers/items.controller';
 import { findOthers } from '../controllers/items.controller';
 import { checkUser } from '../middlewares/auth.middleware';
@@ -16,5 +16,6 @@ itemRouter.get('/other/:id', checkUser, findOthers)
 itemRouter.get('/:itemId', checkUser, findSpecificItem)
 itemRouter.post('/:itemId', checkUser, updateItem)
 itemRouter.get('/', checkUser, vendorItems)
+itemRouter.post('/', checkUser, createItem)
 
 export default itemRouter;

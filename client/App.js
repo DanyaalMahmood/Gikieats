@@ -17,7 +17,8 @@ import Vmenu from './screens/Vendor/vendormenu';
 import store from './store'
 import VendorHome from './screens/Vendor/vendorHome';
 import { Provider } from 'react-redux'
-
+import Vendoritemform from './screens/Vendor/vendoritemform';
+import Vendornewitemform from './screens/Vendor/vendornewitemform';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +38,9 @@ export default function App() {
           <Stack.Screen name="Vendor" component={Vendor}/>
           <Stack.Screen name="Item" component={Item}/>
           <Stack.Screen name="VendorSi" component={VendorSi}/>
-          <Stack.Screen name="Vform" component={Vform}/>
+          <Stack.Screen name="Vendoritemform" component={Vendoritemform}/>
+          <Stack.Screen name="Vendornewitemform" component={Vendornewitemform}/>
+
           <Stack.Screen name="Vmenu" component={Vmenu}/>
           <Stack.Screen name="VendorHome" component={VendorHome}/>
         </Stack.Navigator>

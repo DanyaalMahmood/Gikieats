@@ -172,6 +172,46 @@ const updateItem = async (req: Request, res: Response) => {
   }
 }
 
+
+const createItem = async (req: Request, res: Response) => {
+  try {
+    const phoneno = await getVendor(req, res);
+    const vendor = await prisma.vendor.findFirst({
+      where: {
+        phoneno: phoneno
+      },
+    });
+
+    if (!vendor) {
+      return res.status(404).json({ error: 'Vendor not found' });
+    }
+
+
+    const vendorId = vendor.id;
+    const itemId = req.params.itemId;
+    const { name, description, image, price, availability, category } = req.body;
+
+    
+    const updatedItem = await prisma.item.create({
+      data: {
+        name: name,
+        description: description,
+        image: image,
+        price: parseInt(price),
+        availability: availability,
+        category: category,
+        vendorid: vendorId
+      }
+    });
+
+    res.status(200).json(updatedItem);
+
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: 'Something went wrong' });
+  }
+}
+
 const vendorItems = async (req: Request, res: Response) => {
 
   try {
@@ -203,4 +243,4 @@ const vendorItems = async (req: Request, res: Response) => {
 }
 
 
-export { findDesi, findFastFood, findOthers, findSpecificItem, updateItem, vendorItems };
+export { findDesi, findFastFood, findOthers, findSpecificItem, updateItem, vendorItems, createItem };
