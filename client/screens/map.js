@@ -32,7 +32,7 @@ export default FourthScreen = ({ navigation }) => {
                             </View>
                             <View style={styles.column}>
                                 <Text style={styles.text1}>Delivery time</Text>
-                                <Text style={styles.text2}>3:00 pm(max 20 min)</Text>
+                                <Text style={styles.text2}>3:00 pm (max 20 min)</Text>
                             </View>
                         </View>
                         <View style={styles.row}>
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         fontWeight: '200'
     },
     text2: {
-        fontsize :18,
+        fontsize :20,
         fontWeight: '500',
     },
     text3: {

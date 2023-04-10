@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,7 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
 import fastfood from './menuScreens/fastfood';
 
-export default Menu = ({ navigation }) => {
+export default History = ({ navigation }) => {
     const [search, setSearch] = useState('');
     const [category, setCategory] = useState('fastfood');
     const [items, setItems] = useState([]);
@@ -74,7 +74,7 @@ export default Menu = ({ navigation }) => {
     }
 
     const onSearch = (text) => {
-        if(text === "") {
+        if (text === "") {
             setItems(fetchItems);
         }
         console.log(text, 'text');
@@ -90,44 +90,36 @@ export default Menu = ({ navigation }) => {
         <View style={styles.container}>
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => alert('menu pressed')}>
-                        <Ionicons name="menu-outline" size={32} color="black" />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons
+                            name='arrow-back'
+                            size={24}
+                            color='black'
+                        // onPress={() => navigation.navigate('Address')}
+
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => alert('menu pressed')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>Delicious             food for you</Text>
+                    <Text style={styles.titleText}>History</Text>
                 </View>
-                <View style={styles.search}>
-                    <Ionicons name="search-outline" size={32} color="black" />
-                    <TextInput style={styles.searchinput} onChangeText={onSearch} placeholder='Search' />
-                </View>
-                <View style={styles.categoriesContainer}>
-                    <TouchableOpacity onPress={() => setCategory('fastfood')}>
-                        <View style={{ ...styles.categoriesbox, ...b1 }}>
-                            <Text style={styles.categoriesText}>Fast Food</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCategory('desi')}>
-                        <View style={{ ...styles.categoriesbox, ...b2 }}>
-                            <Text style={styles.categoriesText}>Desi Food</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setCategory('other')}>
-                        <View style={{ ...styles.categoriesbox, ...b3 }}>
-                            <Text style={styles.categoriesText}>Other Items</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-
+                <View style={styles.divider} />
                 {items.map((item) => {
                     return (
                         <Pressable key={item.id} style={styles.itemss} onPress={() => { navigation.navigate('Vendoritemform'); dispatch(SetItem(item)) }}>
-                            <Text style={{ fontSize: 26 }}>{item.name}</Text>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>
+                            <View style={styles.row}>
+                                <Text style={{ fontSize: 26 }}>{item.name}</Text>
+                                {/*<Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>*/}
+                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>x2</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={{ fontSize: 26 }}>{item.name}</Text>
+                                {/*<Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>*/}
+                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>x2</Text>
+                            </View>
                         </Pressable>
                     )
                 })}
@@ -137,23 +129,37 @@ export default Menu = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    divider: {
+        height: 1,
+        backgroundColor: '#ccc',
+        marginHorizontal: 50,
+        marginVertical: 20,
+    },
     container: {
         top: 40,
         height: 740,
         backgroundColor: '#F2F2F2',
 
     },
-    itemss: {
+    row: {
         flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        // height: 150,
+        // marginRight: 20,
+
+      },
+      itemss: {
+        flexDirection: 'column',
         backgroundColor: '#D8D8D8',
-        height: 100,
         marginHorizontal: 25,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-        marginVertical: 15
-    },
+        marginVertical: 15,
+      },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -165,8 +171,8 @@ const styles = StyleSheet.create({
     title: {
         backgroundColor: '#F2F2F2',
         paddingHorizontal: 25,
-        height: 100,
-        bottom: 20,
+        height: 70,
+        // bottom: 20,
     },
     titleText: {
         fontSize: 40,
