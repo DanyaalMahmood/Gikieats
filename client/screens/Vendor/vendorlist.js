@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     title: {
         backgroundColor: '#F2F2F2',
         paddingHorizontal: 25,
-        height: 100
+        height: 100,
+        bottom: 20,
     },
     titleText: {
         fontSize: 40,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     },
     search: {
         backgroundColor: '#D8D8D8',
-        height: 50,
+        height: 60,
         borderRadius: 20,
         marginHorizontal: 25,
         flexDirection: 'row',
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
     searchinput: {
         backgroundColor: 'transparent',
         flex: 1,
-        height: '70%',
+        height: '90%',
         fontSize: 20,
         padding: 10,
     },

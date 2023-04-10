@@ -1,45 +1,39 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, Image, SafeAreaView, ScrollView, Dimensions } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Avatar } from 'react-native-elements';
-import burgericon from '../assets/burgericon.png';
-import pizzaicon from '../assets/pizzaicon.png';
-import spaghettiicon from '../assets/spaghettiicon.png';
+import { useSelector, useDispatch } from 'react-redux';
+import { SetCart } from '../slices/cart';
 
-const CircleAvatar = ({ name, text, onPress }) => {
-    return (
-        <Pressable onPress={onPress}>
-            <Avatar
-                size="large"
-                rounded
-                source={name}
-                containerStyle={styles.avatarContainer}
-            />
-            <Text style={styles.text}>{text}</Text>
-        </Pressable>
-    );
-};
 
 export default Screen3 = ({ navigation }) => {
+    const item = useSelector((state) => state.item);
+    const itemName =item.name;
+    let cart = useSelector((state) => state.cart.cartItems);
+    let dispatch = useDispatch();
+
+    const addItem = async () => {
+        let newcart = {};
+
+        if(cart[itemName] === undefined) {
+            newcart[itemName] = { qty: 1, id: item.id, price: item.price };
+        } else {
+            newcart[itemName] = { qty: 1 + (cart[itemName]).qty, id: item.id, price: item.price}
+        }
+        newcart = {...cart, ...newcart};
+
+        await dispatch(SetCart({ cartItems: newcart }));
+        navigation.navigate('UserHome');
+        
+    };
+
+    
+
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.appBar}>
-                <MaterialIcons
-                    name='arrow-back'
-                    size={24}
-                    color='black'
-                    onPress={() => navigation.goBack()}
-                />
-            </View>
+            
 
             <View style={styles.avatarContainer}>
-                <Avatar
-                    size={150}
-                    rounded
-                    source={spaghettiicon}
-                />
-                <Text style={styles.title}>Chicken Spaghetti</Text>
-                <Text style={styles.subtitle}>Rs 880</Text>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.subtitle}>Rs {item.price}</Text>
             </View>
 
             <View style={styles.divider} />
@@ -51,11 +45,11 @@ export default Screen3 = ({ navigation }) => {
                 </View>
 
                 <View style={styles.contentContainer}>
-                    <Text style={styles.contentTitle}>Return Policy</Text>
-                    <Text style={styles.contentDescription}>All our foods are double checked before leaving our stores so by any case you found a broken food please contact our hotline immediately.</Text>
+                    <Text style={styles.contentTitle}>Description</Text>
+                    <Text style={styles.contentDescription}>{item.description}</Text>
                 </View>
             </ScrollView>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Cart')}>
+            <Pressable style={styles.button} onPress={addItem}>
 
                 <Text style={styles.buttonText}>
                     Add to cart

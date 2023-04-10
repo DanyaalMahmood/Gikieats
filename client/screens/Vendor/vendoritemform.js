@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function Vendoritemform({ navigation, route }) {
     const [form, setForm] = useState('VSI');
     const [item, setItem] = useState({});
-    const setitem = useSelector((state) => state.item)
+    const setitem = useSelector((state) => state.item);
     console.log(setitem, 'item')
 
 
@@ -36,7 +36,7 @@ export default function Vendoritemform({ navigation, route }) {
             <View style={styles.logocontainer}>
                 <Image
                     style={styles.image}
-                    source={require('./../../assets/shwarma2.png')}
+                    source={require('./../../assets/noodles.jpg')}
                 />
             </View>
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     logocontainer: {
-        backgroundColor: '#FFEA40',
+        backgroundColor: '#FFCC82',
         height: '40%',
         width: '100%',
         top: 0,

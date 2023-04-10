@@ -4,8 +4,41 @@ import { MaterialIcons } from '@expo/vector-icons';
 import map from '../assets/map.png';
 import burger from '../assets/burger.png';
 import myicon from '../assets/myicon.png';
+import { BASEURL } from '@env';
+import axios from 'axios';
+import { useSelector, useDispatch} from 'react-redux';
+import { SetCart } from '../slices/cart';
 
 export default FourthScreen = ({ navigation }) => {
+
+    const cart = useSelector((state) => state.cart.cartItems);
+    const vendor = useSelector((state) => state.vendor);
+    const keys = Object.keys(cart);
+    const body = keys.map((key) => { return {item:cart[key].id, quantity:cart[key].qty}});
+    console.log('body', vendor);
+
+    const dispatch = useDispatch();
+    const submitOrder = async () => {
+        try {
+            const response = await axios.post(`${BASEURL}/order/${vendor.id}`, body);
+            //console.log(response.data);
+            // await dispatch(setVendor(response.data[0]));
+            //await setVenders(response.data);
+            // await setItems(response.data);
+            // await fetchedsetItems(response.data);
+            console.log('order complete');
+            await dispatch(SetCart({cartItems: {}}));
+            navigation.navigate('UserHome');
+
+        } catch (err) {
+            //console.log(err);
+            console.log(err.response.data.error);
+        }
+    };
+
+
+
+
     return (
         <View style={styles.container}>
             <View style={styles.appBar}>
@@ -32,7 +65,7 @@ export default FourthScreen = ({ navigation }) => {
                             </View>
                             <View style={styles.column}>
                                 <Text style={styles.text1}>Delivery time</Text>
-                                <Text style={styles.text2}>3:00 pm(max 20 min)</Text>
+                                <Text style={styles.text2}>3:00 pm (max 20 min)</Text>
                             </View>
                         </View>
                         <View style={styles.row}>
@@ -59,7 +92,7 @@ export default FourthScreen = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Startup')}>
+            <Pressable style={styles.button} onPress={submitOrder}>
 
                 <Text style={styles.buttonText}>
                     Complete Order
@@ -191,7 +224,7 @@ const styles = StyleSheet.create({
         fontWeight: '200'
     },
     text2: {
-        fontsize :18,
+        fontSize :20,
         fontWeight: '500',
     },
     text3: {
