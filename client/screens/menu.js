@@ -26,12 +26,11 @@ export default Menu = ({ navigation }) => {
     const isFocused = useIsFocused();
 
     const vendor = useSelector((state) => state.vendor);
-    console.log(vendor);
+
 
     useEffect(() => {
         if (isFocused) {
             fetchItems();
-            console.log('use effect on initial mount in user home');
         };
     }, [isFocused]);
     useEffect(() => {

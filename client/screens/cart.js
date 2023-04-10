@@ -1,106 +1,108 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Switch ,Pressable} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Pressable } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
 import burger from '../assets/burger.png';
 import salad from '../assets/salad.png';
 import pasta from '../assets/pasta.png';
+import { useState, useEffect } from 'react';
+import { SetCart } from '../slices/cart';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default CartScreen = ({ navigation }) => {
+
+    const [cart, setCart] = useState({});
+    const temp = useSelector((state) => state.cart.cartItems);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setCart(temp);
+    }, []);
+
+
+
+    console.log('Inside cart', Object.keys(cart));
+    const keys = Object.keys(cart);
+
+    const addItem = async (key) => {
+        console.log(cart, 'key', key);
+        let newcart = cart;
+
+
+        newcart[key] = { ...newcart[key], qty: 1 + (cart[key]).qty };
+
+        newcart = { ...cart, ...newcart };
+
+        await dispatch(SetCart({ cartItems: newcart }));
+        setCart(newcart);
+    };
+
+    const subItem = async (key) => {
+        console.log(cart, 'key', key);
+        let newcart = { ...cart };
+
+        if (newcart[key].qty === 1) {
+            delete newcart[key];
+            await dispatch(SetCart({ cartItems: newcart }));
+            console.log(newcart, 'hellooasdfas')
+            setCart(newcart);
+            return;
+        }
+
+        newcart[key] = { ...newcart[key], qty: (cart[key]).qty - 1 };
+
+        newcart = { ...cart, ...newcart };
+
+        await dispatch(SetCart({ cartItems: newcart }));
+        setCart(newcart);
+    };
+
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="chevron-back" size={24} color="black" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Cart</Text>
-                <View style={{ flex: 1 }} />
-            </View>
-            <Text style={styles.swipeText}>Swipe on an item to rotate</Text>
-            <View style={styles.maincontainer}>
-                <View style={styles.itemContainer}>
-                    <View style={styles.avatarContainer}>
-                        <Avatar
-                            rounded
-                            size={80}
-                            source={burger}
-                            containerStyle={styles.avatar}
-                        />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.avatarText}>HamBurger</Text>
-                            <View style={styles.yellowContainer}>
-                                <Text style={styles.yellowText}>$500</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.switchContainer}>
-                        <TouchableOpacity style={styles.switchButton}>
-                            <Text style={styles.switchText}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.quantityText}>1</Text>
-                        <TouchableOpacity style={styles.switchButton}>
-                            <Text style={styles.switchText}>+</Text>
-                        </TouchableOpacity>
-                    </View>
+            <ScrollView style={{ flex: 1 }}>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>Your Cart</Text>
                 </View>
-                <View style={styles.itemContainer}>
-                    <View style={styles.avatarContainer}>
-                        <Avatar
-                            rounded
-                            size={80}
-                            source={salad}
-                            containerStyle={styles.avatar}
-                        />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.avatarText}>Fresh Salad</Text>
-                            <View style={styles.yellowContainer}>
-                                <Text style={styles.yellowText}>$250</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.switchContainer}>
-                        <TouchableOpacity style={styles.switchButton}>
-                            <Text style={styles.switchText}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.quantityText}>1</Text>
-                        <TouchableOpacity style={styles.switchButton}>
-                            <Text style={styles.switchText}>+</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.itemContainer}>
-                    <View style={styles.avatarContainer}>
-                        <Avatar
-                            rounded
-                            size={80}
-                            source={pasta}
-                            containerStyle={styles.avatar}
-                        />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.avatarText}>Chicken Pasta</Text>
-                            <View style={styles.yellowContainer}>
-                                <Text style={styles.yellowText}>$899</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.switchContainer}>
-                        <TouchableOpacity style={styles.switchButton}>
-                            <Text style={styles.switchText}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.quantityText}>1</Text>
-                        <TouchableOpacity style={styles.switchButton}>
-                            <Text style={styles.switchText}>+</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-            <Pressable style={styles.button} onPress={() => navigation.navigate('Address')}>
 
-                <Text style={styles.buttonText}>
-                    Order Now
-                </Text>
-            </Pressable>
+                {keys.map((key) => {
+                    return (
+                        <View style={styles.itemContainer} key={key}>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.avatarText}>{key}</Text>
+                                <View style={styles.yellowContainer}>
+                                    <Text style={styles.yellowText}>Rs {cart[key].price * cart[key].qty}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.switchContainer}>
+                                <TouchableOpacity style={styles.switchButton} onPress={() => subItem(key)}>
+                                    <Text style={styles.switchText}>-</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.quantityText}>x{cart[key].qty}</Text>
+                                <TouchableOpacity style={styles.switchButton} onPress={() => addItem(key)}>
+                                    <Text style={styles.switchText}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+
+
+                        </View>
+                    )
+                })}
+
+
+                <View style={styles.total}>
+                    <Text style={styles.totaltext}>Total:   Rs {keys.reduce((accumulator, currentValue) => accumulator + (cart[currentValue].price * cart[currentValue].qty), 0)}</Text>
+                </View>
+
+                <Pressable style={styles.button} onPress={() => navigation.navigate('Address')}>
+
+                    <Text style={styles.buttonText}>
+                        Order Now
+                    </Text>
+                </Pressable>
+            </ScrollView>
         </View>
     );
 };
@@ -113,25 +115,38 @@ const styles = StyleSheet.create({
         height: 75,
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute',
-        bottom: 50,
         alignSelf: 'center',
-      },
-      buttonText: {
+        marginTop: 40
+    },
+    title: {
+        backgroundColor: '#F2F2F2',
+        marginTop: 100,
+        marginHorizontal: 25,
+        height: 60,
+    },
+    total: {
+        marginHorizontal: 25,
+        marginVertical: 10
+    },
+    titleText: {
+        fontSize: 40,
+        fontWeight: 'bold'
+    },
+    totaltext: {
+        fontSize: 25,
+        fontWeight: 'bold'
+    },
+    buttonText: {
         color: 'white',
         fontSize: 20,
         fontWeight: '500'
-      },
-    maincontainer: {
-        top: 100,
-        color: 'white',
     },
+
     container: {
-        flex: 1,
+        height: 810,
         backgroundColor: '#F5F5F8',
     },
     header: {
-        top: 30,
         color: '#F5F5F8',
         flexDirection: 'row',
         alignItems: 'center',
@@ -148,7 +163,6 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     swipeText: {
-        top: 50,
         fontSize: 16,
         color: '#777',
         marginLeft: 16,
@@ -160,41 +174,35 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFF',
-        padding: 16,
-        margin: 16,
         width: 350,
         alignSelf: 'center',
         borderRadius: 8,
         shadowColor: '#000',
+        height: 120,
+        paddingLeft: 30,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 2,
-        borderRadius:30,
+        borderRadius: 30,
+        marginVertical: 10,
     },
-    avatarContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    avatar: {
-        marginRight: 16,
-    },
+
     textContainer: {
         justifyContent: 'center',
     },
     avatarText: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 4,
     },
     yellowContainer: {
         // backgroundColor: '#FDE500',
         borderRadius: 4,
-        paddingVertical: 4,
-        paddingHorizontal: 8,
+        paddingVertical: 6,
     },
     yellowText: {
-        fontSize: 12,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#EFB60E',
     },
@@ -205,9 +213,16 @@ const styles = StyleSheet.create({
     },
     switchButton: {
         backgroundColor: '#EFB60E',
-        borderRadius: 4,
-        width: 24,
-        height: 24,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 15,
+        width: 40,
+        height: 40,
         alignItems: 'center'
+    },
+    quantityText: {
+        fontWeight: 'bold',
+        fontSize: 25
     }
 })

@@ -14,9 +14,9 @@ export default Screen3 = ({ navigation }) => {
         let newcart = {};
 
         if(cart[itemName] === undefined) {
-            newcart[itemName] = { qty: 1 };
+            newcart[itemName] = { qty: 1, id: item.id, price: item.price };
         } else {
-            newcart[itemName] = { qty: 1 + (cart[itemName]).qty}
+            newcart[itemName] = { qty: 1 + (cart[itemName]).qty, id: item.id, price: item.price}
         }
         newcart = {...cart, ...newcart};
 

@@ -102,7 +102,7 @@ const createOrder = async (req: Request, res: Response) => {
 
         const test: any = orderItems.map((item: OrderItem) => ({
             item: item.item,
-            quantity: item.quantity,
+            quantity: item.quantity.toString(),
         }))
 
         const newOrder = await prisma.order.create({
