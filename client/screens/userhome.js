@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './profile';
 import Menu from './menu';
+import History from './history';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,7 @@ export default function UserHome({ navigation, route }) {
             <Tab.Screen name="Test3" component={Test3} />
             <Tab.Screen name="Profile" component={Profile}/>
             <Tab.Screen name="Menu" component={Menu}/>
+            <Tab.Screen name="History" component={History}/>
         </Tab.Navigator>
     );
 }
@@ -56,7 +58,7 @@ const Tabbar = ({state, navigation}) => {
     if (currentRoute === 'Profile') {
         b2 = {...b2, ...styles.buttonSelected}
     }
-    if (currentRoute === 'Test3') {
+    if (currentRoute === 'History') {
         b3 = {...b3, ...styles.buttonSelected}
     }
     

@@ -190,7 +190,7 @@ const getHistory = async (req: Request, res: Response) => {
 
         const vendor = await prisma.vendor.findFirst({
             where: {
-                phoneno: undefined
+                phoneno: phoneno
             },
         });
 

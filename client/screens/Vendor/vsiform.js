@@ -25,8 +25,10 @@ export default function VSIform({navigation}) {
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('VendorHome');
+            //console.log(response);
 
         } catch (err) {
+            console.log(response);
             setError(err.response.data.error);
             console.log(err.response.data.error);
         }

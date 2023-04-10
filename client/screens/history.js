@@ -92,12 +92,12 @@ export default History = ({ navigation }) => {
                 <View style={styles.title}>
                     <Text style={styles.titleText}>History</Text>
                 </View>
-                <View style={styles.divider} />
+                {/* <View style={styles.divider} /> */}
                 {history.map((item) => {
                     return (
                         <Pressable key={item.id} style={styles.itemss} onPress={() => { null }}>
                             <View>
-                                <Text style={{fontSize: 10}}>{item.id}</Text>
+                                <Text style={{fontSize: 8, alignSelf: 'center'}}>#{item.id}</Text>
                             </View>
                             {item.orderitems.map((order) => {
                                 return (
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     container: {
         top: 40,
         height: 740,
+        paddingTop: 20,
         backgroundColor: '#F2F2F2',
 
     },
