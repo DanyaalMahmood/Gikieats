@@ -8,6 +8,7 @@ import axios from 'axios';
 
 
 export default function VSIform({navigation}) {
+
     const [password, setPassword] = useState('hello123');
     const [phoneno, setPhoneno] = useState('0305009988');
     const [name, setName] = useState('');
@@ -16,6 +17,7 @@ export default function VSIform({navigation}) {
 
     const dispatch = useDispatch();
 
+
     const handleSubmit = async () => {
         try {
             const response = await axios.post(`${BASEURL}/vendor/signin`, {password, phoneno});
@@ -23,17 +25,21 @@ export default function VSIform({navigation}) {
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('VendorHome');
+
         } catch (err) {
             setError(err.response.data.error);
             console.log(err.response.data.error);
         }
     }
 
+
     return (
         <View style={styles.container}>
             <View style={styles.email}>
                 <Text>Phone Number</Text>
+
                 <TextInput style={styles.input} value={phoneno} onChangeText={(text) => setPhoneno(text)}/>
+
             </View>
             <View style={styles.password}>
                 <Text>Password</Text>

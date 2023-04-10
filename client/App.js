@@ -13,6 +13,7 @@ import Vendor from './screens/vendor';
 import Item from './screens/item';
 import VendorSi from './screens/Vendor/vendorsignin';
 import Vform from './screens/Vendor/temp';
+
 import Vmenu from './screens/Vendor/vendormenu';
 import store from './store'
 import VendorHome from './screens/Vendor/vendorHome';
@@ -38,11 +39,11 @@ export default function App() {
           <Stack.Screen name="Vendor" component={Vendor}/>
           <Stack.Screen name="Item" component={Item}/>
           <Stack.Screen name="VendorSi" component={VendorSi}/>
+
           <Stack.Screen name="Vendoritemform" component={Vendoritemform}/>
           <Stack.Screen name="Vendornewitemform" component={Vendornewitemform}/>
 
-          <Stack.Screen name="Vmenu" component={Vmenu}/>
-          <Stack.Screen name="VendorHome" component={VendorHome}/>
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

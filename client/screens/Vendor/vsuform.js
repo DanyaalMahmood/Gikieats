@@ -8,6 +8,7 @@ import axios from 'axios';
 
 export default function VSUform({ navigation }) {
 
+
     const [password, setPassword] = useState('');
     const [phoneno, setPhoneno] = useState('');
     const [name, setName] = useState('');
@@ -18,11 +19,13 @@ export default function VSUform({ navigation }) {
 
     const handleSubmit = async () => {
         try {
+
             const response = await axios.post(`${BASEURL}/vendor`, {password, phoneno, name});
             console.log(response.data);
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('VendorHome');
+
         } catch (err) {
             setError(err.response.data.error);
             console.log(err.response.data.error);

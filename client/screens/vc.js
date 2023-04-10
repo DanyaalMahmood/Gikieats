@@ -11,8 +11,9 @@ export default function VC({navigation, route}) {
         source={require('./../img/restaurant1.png')}
       />
 
- 
+
       <Pressable style={styles.vendor} onPress={() => {navigation.navigate('VendorSi')}}>
+
         <Text style={styles.buttonText}>
           Vendor
         </Text>

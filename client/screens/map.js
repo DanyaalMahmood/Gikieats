@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     },
     text2: {
         fontsize :18,
-        fontWeight: '500'
+        fontWeight: '500',
     },
     text3: {
         marginLeft: 4,
