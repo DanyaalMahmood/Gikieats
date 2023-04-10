@@ -183,9 +183,9 @@ const updateOrderStatus = async (req: Request, res: Response) => {
 const getHistory = async (req: Request, res: Response) => {
     try {
         const phoneno = await getVendor(req, res);
-    
-        if(phoneno === undefined) {
-            return res.status(404).json({error: 'You are not a Vendor'});
+
+        if (phoneno === undefined) {
+            return res.status(404).json({ error: 'You are not a Vendor' });
         }
 
         const vendor = await prisma.vendor.findFirst({
@@ -220,5 +220,37 @@ const getHistory = async (req: Request, res: Response) => {
     }
 }
 
+const getHistoryForUser = async (req: Request, res: Response) => {
+    const vendorId = req.params.vendorId;
+    try {
+        const regno = await getUser(req, res);
+        if (!regno) {
+            return res.status(400).json({ error: 'Unauthorized' });
+        }
+        if (regno === undefined) {
+            return res.status(404).json({ error: 'You are not a User' });
+        }
 
-export { createOrder, updateOrderStatus, getHistory };
+        const orders = await prisma.order.findMany({
+            where: {
+                vendorid: vendorId,
+                userid: regno
+            },
+            include: {
+                orderitems: {
+                    include: {
+                        itemId_fk: true
+                    }
+                },
+            }
+        });
+
+        return res.json(orders);
+
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: 'An error occurred while creating the order.' });
+    }
+}
+
+export { createOrder, updateOrderStatus, getHistory, getHistoryForUser };

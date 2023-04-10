@@ -1,15 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
+import { Avatar } from 'react-native-elements';
+import pizzaa from '../assets/pizza1.png';
 
-export default function Startup({navigation, route}) {
+export default function Startup({ navigation, route }) {
   return (
     <View style={styles.container}>
 
       <Text style={styles.text}>Giki Eats</Text>
 
-      <Image
-        style={styles.stretch}
-        source={require('./../img/burger.png')}
+      <Avatar
+        rounded
+        size={80}
+        source={pizzaa}
+        containerStyle={styles.avatar}
       />
       <Pressable style={styles.button} onPress={() => navigation.navigate('VC')}>
 
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: '900',
     color: 'white',
-    bottom: 380
+    bottom: 150
   },
   button: {
     backgroundColor: '#ffffff',
@@ -57,5 +61,11 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'contain',
     bottom: 250
-  }
+  },
+  avatar: {
+    marginRight: 16,
+    width: 400,
+    height: 400,
+    bottom: 150,
+},
 });
