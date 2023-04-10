@@ -189,6 +189,16 @@ const vendorCheck = async (req: Request, res: Response) => {
     }
 };
 
+const vendorSignOut = async (req: Request, res: Response) => {
+    try {
+        res.clearCookie("jwt");
+        res.json({ "message": "You are logged out successfully!" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
 
 const getVendors = async (req: Request, res: Response) => {
     try {
@@ -206,5 +216,5 @@ const getVendors = async (req: Request, res: Response) => {
 }
 
 
-export { getVendors, vendorSignin, vendorCheck, vendorSignup };
+export { getVendors, vendorSignin, vendorCheck, vendorSignup, vendorSignOut };
 
