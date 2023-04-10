@@ -6,6 +6,42 @@ const prisma = new PrismaClient()
 
 const secret = process.env.SECRET;
 
+const getVendor = async (req: Request, res: Response) => {
+    try {
+
+        const token = req.cookies.jwt;
+
+        if (token === null || typeof (secret) !== "string") {
+            res.status(400);
+            res.json({ "error": "jwt error" });
+            return false
+        }
+
+        let decode: any;
+
+        await jwt.verify(token, secret, async (err: any, decodedToken: any) => {
+            if (err) {
+                res.json({ "error": "Not a valid json token" });
+                return false;
+            } else {
+                decode = await jwt.decode(token);
+            }
+        });
+
+
+
+
+        if (decode === undefined || decode.phoneno === undefined) return;
+        const phoneno = decode.phoneno;
+
+
+        return phoneno;
+    } catch (err) {
+
+        res.status(400).json({ error: 'An error occured while signing in!' });
+    }
+};
+
 const getUser = async (req: Request, res: Response) => {
     try {
 
@@ -54,6 +90,7 @@ interface Order {
 
 const createOrder = async (req: Request, res: Response) => {
     const body: { item: string, quantity: string }[] = req.body;
+    const vendorId = req.params.vendorId;
 
     try {
         const regno = await getUser(req, res);
@@ -74,6 +111,7 @@ const createOrder = async (req: Request, res: Response) => {
                 userid: regno,
                 ordertime: String(new Date()),
                 assigned: '22',
+                vendorid: vendorId,
                 orderitems: {
                     createMany: {
                         data: test,
@@ -90,4 +128,86 @@ const createOrder = async (req: Request, res: Response) => {
 };
 
 
-export { createOrder };
+const updateOrderStatus = async (req: Request, res: Response) => {
+    try {
+        const phoneno = await getVendor(req, res);
+        const vendor = await prisma.vendor.findFirst({
+            where: {
+                phoneno: phoneno
+            },
+        });
+
+        if (!vendor) {
+            return res.status(404).json({ error: 'Vendor not found' });
+        }
+
+        const vendorId = vendor.id;
+        const orderId = req.params.orderId;
+        const { status } = req.body;
+
+        const order = await prisma.order.findUnique({
+            where: {
+                id: orderId,
+            },
+            select: {
+                vendorid: true,
+            },
+        });
+
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        if (order.vendorid !== vendorId) {
+            console.log(vendorId);
+            return res.status(403).json({ error: 'You are not authorized to update this order' });
+        }
+
+        await prisma.order.update({
+            where: {
+                id: orderId,
+            },
+            data: {
+                status: status,
+            },
+        });
+
+        return res.json({ message: 'Order status updated successfully' });
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: 'Something went wrong' });
+    }
+}
+
+
+const getHistory = async (req: Request, res: Response) => {
+    try {
+        const phoneno = await getVendor(req, res);
+        const vendor = await prisma.vendor.findFirst({
+            where: {
+                phoneno: phoneno
+            },
+        });
+
+        if (!vendor) {
+            return res.status(404).json({ error: 'Vendor not found' });
+        }
+
+        const vendorId = vendor.id;
+        const orders = await prisma.order.findMany({
+            where: {
+                vendorid: vendorId,
+            },
+        });
+
+        return res.json(orders);
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: 'Something went wrong' });
+    }
+}
+
+
+export { createOrder, updateOrderStatus, getHistory };

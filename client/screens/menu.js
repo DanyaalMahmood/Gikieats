@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { BASEURL } from '@env';
+import { SetItem } from '../slices/item';
 
 
 import Fastfood from './menuScreens/fastfood';
@@ -93,7 +94,7 @@ export default Menu = ({ navigation }) => {
                     <TouchableOpacity onPress={() => alert('menu pressed')}>
                         <Ionicons name="menu-outline" size={32} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => alert('menu pressed')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
                 </View>
@@ -125,7 +126,7 @@ export default Menu = ({ navigation }) => {
 
                 {items.map((item) => {
                     return (
-                        <Pressable key={item.id} style={styles.itemss} onPress={() => { navigation.navigate('Vendoritemform'); dispatch(SetItem(item)) }}>
+                        <Pressable key={item.id} style={styles.itemss} onPress={() => { navigation.navigate('Item'); dispatch(SetItem(item)) }}>
                             <Text style={{ fontSize: 26 }}>{item.name}</Text>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rs.{item.price}</Text>
                         </Pressable>
