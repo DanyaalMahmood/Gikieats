@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 20,
         shadowColor: 'black',
     },
-
     image: {
         width: 250,
         height: 250,
@@ -133,5 +132,4 @@ const styles = StyleSheet.create({
         top: 30,
         alignSelf: 'center'
     }
-
 });
