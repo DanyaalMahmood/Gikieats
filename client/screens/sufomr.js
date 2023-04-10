@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useState } from 'react';
-import {BASEURL} from '@env';
+import { BASEURL } from '@env';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../slices/user';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function SUform({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirm, setconfirm] = useState('');
     const [regno, setRegno] = useState('');
     const [phoneno, setPhoneno] = useState('');
     const [hostel, setHostel] = useState('');
@@ -16,50 +17,76 @@ export default function SUform({ navigation }) {
     const [error, setError] = useState('');
 
     const dispatch = useDispatch();
+    const passwordRegex = /^.{8,}$/;
+
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`${BASEURL}/user`, {email, password, regno, phoneno, hostel, name});
+            if (password !== confirm) {
+                setError('Passwords do not match');
+                return;
+            }
+
+            if (!passwordRegex.test(password)) {
+                setError('Password must contain at least one letter and one number, and be at least 8 characters long');
+                return;
+            }
+            const response = await axios.post(`${BASEURL}/user`, { email, password, regno, phoneno, hostel, name });
             console.log(response.data);
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('UserHome');
+
+
         } catch (err) {
             setError(err.response.data.error);
             console.log(err.response.data.error);
         }
     }
 
+
     return (
         <View style={styles.container}>
-            <View  style={styles.scrollable}>
-            <ScrollView>
-                <View style={styles.email}>
-                    <Text>Name</Text>
-                    <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)}/>
-                </View>
-                <View style={styles.password}>
-                    <Text>Email Address</Text>
-                    <TextInput style={styles.input} value={email} onChangeText={(text) => setEmail(text)}/>
-                </View>
-                <View style={styles.password}>
-                    <Text>Registration Number</Text>
-                    <TextInput style={styles.input} value={regno} onChangeText={(text) => setRegno(text)}/>
-                </View>
-                <View style={styles.password}>
-                    <Text>Phone Number</Text>
-                    <TextInput style={styles.input} value={phoneno} onChangeText={(text) => setPhoneno(text)}/>
-                </View>
-                <View style={styles.password}>
-                    <Text>Hostel Number</Text>
-                    <TextInput style={styles.input} value={hostel} onChangeText={(text) => setHostel(text)}/>
-                </View>
-                <View style={styles.password}>
-                    <Text>Password</Text>
-                    <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)}/>
-                </View>
-                
-            </ScrollView>
+            <View style={styles.scrollable}>
+                <ScrollView>
+                    <View style={styles.email}>
+                        <Text>Name</Text>
+                        <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+                    </View>
+                    <View style={styles.password}>
+                        <Text>Email Address</Text>
+                        <TextInput style={styles.input} value={email} onChangeText={(text) => setEmail(text)} keyboardType="email-address" autoCapitalize='none'
+                            autoCorrect={false}
+                            onBlur={() => {
+                                if (!email.includes('@') || !email.endsWith('.com')) {
+                                    setError('Invalid email address');
+                                } else {
+                                    setError('');
+                                }
+                            }} />
+                    </View>
+                    <View style={styles.password}>
+                        <Text>Registration Number</Text>
+                        <TextInput style={styles.input} value={regno} onChangeText={(text) => setRegno(text)} />
+                    </View>
+                    <View style={styles.password}>
+                        <Text>Phone Number</Text>
+                        <TextInput style={styles.input} value={phoneno} onChangeText={(text) => setPhoneno(text.replace(/[^0-9]/g, ''))} />
+                    </View>
+                    <View style={styles.password}>
+                        <Text>Hostel Number</Text>
+                        <TextInput style={styles.input} value={hostel} onChangeText={(text) => setHostel(text.replace(/[^0-9]/g, ''))} />
+                    </View>
+                    <View style={styles.password}>
+                        <Text>Password</Text>
+                        <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} />
+                    </View>
+                    <View style={styles.password}>
+                        <Text>Confirm Password</Text>
+                        <TextInput style={styles.input} value={confirm} onChangeText={(text) => setconfirm(text)} secureTextEntry={true} />
+                    </View>
+
+                </ScrollView>
             </View>
             <View style={styles.error}>
                 <Text style={styles.errortext}>{error}</Text>

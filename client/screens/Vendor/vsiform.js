@@ -2,12 +2,12 @@ import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'rea
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../slices/user';
-import {BASEURL} from '@env';
+import { BASEURL } from '@env';
 import axios from 'axios';
 
 
 
-export default function VSIform({navigation}) {
+export default function VSIform({ navigation }) {
 
     const [password, setPassword] = useState('hello123');
     const [phoneno, setPhoneno] = useState('0305009988');
@@ -20,7 +20,7 @@ export default function VSIform({navigation}) {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`${BASEURL}/vendor/signin`, {password, phoneno});
+            const response = await axios.post(`${BASEURL}/vendor/signin`, { password, phoneno });
             console.log(response.data);
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
@@ -38,12 +38,13 @@ export default function VSIform({navigation}) {
             <View style={styles.email}>
                 <Text>Phone Number</Text>
 
-                <TextInput style={styles.input} value={phoneno} onChangeText={(text) => setPhoneno(text)}/>
+                <TextInput style={styles.input} value={phoneno} onChangeText={(text) => setPhoneno(text.replace(/[^0-9]/g, ''))}
+                    keyboardType={'numeric'} />
 
             </View>
             <View style={styles.password}>
                 <Text>Password</Text>
-                <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)}/>
+                <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} />
             </View>
             <View style={styles.error}>
                 <Text style={styles.errortext}>{error}</Text>
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         alignSelf: 'center',
-      },
-      buttonText: {
+    },
+    buttonText: {
         color: 'white',
         fontSize: 20,
         fontWeight: '500'
