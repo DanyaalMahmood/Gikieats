@@ -54,7 +54,7 @@ export default function SUform({ navigation }) {
                     <Text>Hostel Number</Text>
                     <TextInput style={styles.input} value={hostel} onChangeText={(text) => setHostel(text)}/>
                 </View>
-                <View style={styles.password}>
+                <View style={{...styles.password, marginBottom: 100}}>
                     <Text>Password</Text>
                     <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)}/>
                 </View>
