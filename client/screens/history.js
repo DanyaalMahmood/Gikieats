@@ -43,7 +43,7 @@ export default History = ({ navigation }) => {
 
     const fetchHistory = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/order/history`);
+            const response = await axios.get(`${BASEURL}/order/history/${vendor.id}`);
             //console.log(response.data);
             // await dispatch(setVendor(response.data[0]));
             //await setVenders(response.data);
@@ -93,15 +93,16 @@ export default History = ({ navigation }) => {
                     <Text style={styles.titleText}>History</Text>
                 </View>
                 {/* <View style={styles.divider} /> */}
+                <View style={{marginBottom:20}}>
                 {history.map((item) => {
                     return (
                         <Pressable key={item.id} style={styles.itemss} onPress={() => { null }}>
                             <View>
-                                <Text style={{fontSize: 8, alignSelf: 'center'}}>#{item.id}</Text>
+                                <Text style={{fontSize: 8, alignSelf: 'center', marginBottom: 10}}>OrderID: {item.id}</Text>
                             </View>
                             {item.orderitems.map((order) => {
                                 return (
-                                    <View style={styles.itemouter}>
+                                    <View key={order.id} style={styles.itemouter}>
 
                                         <View style={styles.individualItem}>
                                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{order.itemId_fk.name}</Text>
@@ -113,9 +114,18 @@ export default History = ({ navigation }) => {
                                     </View>
                                 )
                             })}
+
+                            <View>
+                                <Text style={{fontWeight: '300', marginBottom: 5, marginTop: 10}}>Order Time: {item.ordertime.split('T')[0]} {item.ordertime.split('T')[1].split('.')[0]}</Text>
+                            </View>
+                            <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
+                                <Text style={{fontWeight: '900'}}>Status: {item.status}</Text>
+                                <Text style={{fontWeight: '900'}}>Total: {item.orderitems.reduce((accumulator, currentValue) => accumulator + (currentValue.itemId_fk.price * currentValue.quantity), 0)}</Text>
+                            </View>
                         </Pressable>
                     )
                 })}
+                </View>
             </ScrollView>
         </View>
     );
@@ -167,7 +177,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         marginVertical: 10,
         paddingVertical: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 30
     },
     header: {
         flexDirection: 'row',

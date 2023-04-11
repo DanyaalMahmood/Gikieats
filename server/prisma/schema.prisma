@@ -57,7 +57,7 @@ model Order {
   assigned       String  @default("22")
   status         String
   userid         String
-  ordertime      String
+  ordertime      DateTime? @default(now())
   vendorid       String
   vendor_fk      Vendor @relation(fields: [vendorid], references:[id])
   assigned_fk    Rider  @relation(fields: [assigned], references: [id])
