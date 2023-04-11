@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../slices/user';
+import { setVendor } from '../../slices/vendor';
 import BASEURL from './../../assets/baseurl';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ import axios from 'axios';
 export default function VSIform({ navigation }) {
 
     const [password, setPassword] = useState('hello123');
-    const [phoneno, setPhoneno] = useState('0305009988');
+    const [phoneno, setPhoneno] = useState('03041442299');
     const [name, setName] = useState('');
 
     const [error, setError] = useState('');
@@ -22,10 +22,10 @@ export default function VSIform({ navigation }) {
         try {
             const response = await axios.post(`${BASEURL}/vendor/signin`, { password, phoneno });
             console.log(response.data);
-            await dispatch(login(response.data));
-            alert(`You are logged in as ${response.data.name}`);
+            await dispatch(setVendor(response.data));
+            //alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('VendorHome');
-            //console.log(response);
+            console.log(response.data, "vendorinfo" );
 
         } catch (err) {
             console.log(response);

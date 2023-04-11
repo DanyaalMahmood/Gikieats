@@ -4,15 +4,16 @@ import { useState } from 'react';
 import BASEURL from './../../assets/baseurl';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../slices/user';
+import { setVendor } from '../../slices/vendor';
 import axios from 'axios';
 
 export default function VSUform({ navigation }) {
 
 
-    const [password, setPassword] = useState('');
-    const [confirmpassword, setconfirmPassword] = useState('');
-    const [phoneno, setPhoneno] = useState('');
-    const [name, setName] = useState('');
+    const [password, setPassword] = useState('hello123');
+    const [confirmpassword, setconfirmPassword] = useState('hello123');
+    const [phoneno, setPhoneno] = useState('03041442299');
+    const [name, setName] = useState('Raju');
 
     const [error, setError] = useState('');
 
@@ -27,8 +28,8 @@ export default function VSUform({ navigation }) {
 
             const response = await axios.post(`${BASEURL}/vendor`, { password, phoneno, name });
             console.log(response.data);
-            await dispatch(login(response.data));
-            alert(`You are logged in as ${response.data.name}`);
+            await dispatch(setVendor(response.data));
+            //alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('VendorHome');
 
         } catch (err) {

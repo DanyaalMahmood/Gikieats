@@ -7,13 +7,13 @@ import { login } from '../slices/user';
 import axios from 'axios';
 
 export default function SUform({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirm, setconfirm] = useState('');
-    const [regno, setRegno] = useState('');
-    const [phoneno, setPhoneno] = useState('');
-    const [hostel, setHostel] = useState('');
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('maaz@gmail.com');
+    const [password, setPassword] = useState('hello123');
+    const [confirm, setconfirm] = useState('hello123');
+    const [regno, setRegno] = useState('2021023');
+    const [phoneno, setPhoneno] = useState('03042223344');
+    const [hostel, setHostel] = useState('9');
+    const [name, setName] = useState('Maaz Ahmad');
     const [error, setError] = useState('');
 
     const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export default function SUform({ navigation }) {
             const response = await axios.post(`${BASEURL}/user`, { email, password, regno, phoneno, hostel, name });
             console.log(response.data);
             await dispatch(login(response.data));
-            alert(`You are logged in as ${response.data.name}`);
+            //alert(`You are logged in as ${response.data.name}`);
             navigation.navigate('UserHome');
 
 

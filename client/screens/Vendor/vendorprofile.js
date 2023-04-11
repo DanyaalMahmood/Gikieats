@@ -2,19 +2,20 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import myicon from '../assets/myicon.png';
+import myicon from '../../assets/myicon.png';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import BASEURL from '../assets/baseurl';
+import BASEURL from '../../assets/baseurl';
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default Profile = ({ navigation }) => {
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.vendor);
+    console.log(user);
 
     const signout = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/user/signout`);
-            navigation.navigate('Signin');
+            const response = await axios.get(`${BASEURL}/vendor/signout`);
+            navigation.navigate('VendorSi');
         } catch (err) {
             console.log(err);
             console.log(err.response.data.error);
@@ -49,9 +50,7 @@ export default Profile = ({ navigation }) => {
                         />
                         <View style={styles.textContainer}>
                             <Text style={styles.nameText}>{user.name}</Text>
-                            <Text style={styles.emailText}>{user.email}</Text>
                             <Text style={styles.phoneText}>{user.phoneno}</Text>
-                            <Text style={styles.locationText}>Hostel {user.hostel}</Text>
                         </View>
                     </View>
                 </View>
@@ -66,14 +65,7 @@ export default Profile = ({ navigation }) => {
                     style={styles.buttonContainer}
                     onPress={() => alert('Not Implented Yet')}
                 >
-                    <Text style={styles.buttonText}>Pending reviews</Text>
-                    <Ionicons name="arrow-forward" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => alert('Not Implented Yet')}
-                >
-                    <Text style={styles.buttonText}>Faq</Text>
+                    <Text style={styles.buttonText}>Reviews</Text>
                     <Ionicons name="arrow-forward" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -169,25 +161,17 @@ const styles = StyleSheet.create({
         
     },
     nameText: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 2,
+        marginBottom: 10,
     },
-    emailText: {
-        fontWeight: '300',
-        fontSize: 12,
-        marginBottom: 12,
-    },
+
     phoneText: {
         fontWeight: '300',
         fontSize: 14,
         marginBottom: 4,
     },
-    locationText: {
-        fontWeight: '300',
-        fontSize: 14,
-        marginBottom: 8,
-    },
+  
     buttonContainer: {
         borderRadius: 40,
         backgroundColor: 'white',

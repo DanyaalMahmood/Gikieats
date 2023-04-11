@@ -20,7 +20,7 @@ export default function SIform({navigation}) {
             console.log(`${BASEURL}`)
             const response = await axios.post(`${BASEURL}/user/signin`, {email, password});
             await dispatch(login(response.data));
-            alert(`You are logged in as ${response.data.name}`);
+            //alert(`You are logged in as ${response.data.name}`);
             //console.log(response);
             navigation.navigate('Vendor');
         } catch (err) {
