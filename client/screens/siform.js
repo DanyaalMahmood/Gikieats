@@ -17,11 +17,14 @@ export default function SIform({navigation}) {
 
     const handleSubmit = async () => {
         try {
+            //console.log(`${BASEURL}`)
             const response = await axios.post(`${BASEURL}/user/signin`, {email, password});
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
+            //console.log(response);
             navigation.navigate('Vendor');
         } catch (err) {
+            //console.log('err', err);
             setError(err.response.data.error);
             console.log(err.response.data.error);
         }

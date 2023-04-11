@@ -1,49 +1,50 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, RefreshControl} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, RefreshControl } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import myicon from '../assets/myicon.png';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { BASEURL } from '@env';
 
 
-import Fastfood from './menuScreens/fastfood';
-import Desifood from './menuScreens/desifood';
-import Otheritems from './menuScreens/otheritems';
+
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
-import fastfood from './menuScreens/fastfood';
-import { fonts } from 'react-native-elements/dist/config';
 
-export default History = ({ navigation }) => {
-    const [search, setSearch] = useState('');
+
+export default VendorHistory = ({ navigation }) => {
+
     const [history, setHistory] = useState([]);
-    //const [fetcheditems, fetchedsetItems] = useState([]);
+
 
     const isFocused = useIsFocused();
-
-    const vendor = useSelector((state) => state.vendor);
-    //console.log(vendor);
 
     useEffect(() => {
         if (isFocused) {
             fetchHistory();
-            console.log('use effect on initial mount in user home');
+
         };
     }, [isFocused]);
 
-    useEffect(() => {
-        console.log('history', history);
-    }, [history]);
 
+    const changeStatus = async (status, orderId) => {
+        console.log('status change', status, orderId);
+        try {
+            const response = await axios.post(`${BASEURL}/order/update/${orderId}`, {status});
+            console.log('order complete', response.data);
+            fetchHistory();
 
-    const dispatch = useDispatch();
+        } catch (err) {
+            console.log(err);
+            console.log(err.response.data.error);
+        }
+    };
+
 
     const fetchHistory = async () => {
         try {
-            const response = await axios.get(`${BASEURL}/order/history/${vendor.id}`);
+            const response = await axios.get(`${BASEURL}/order/history`);
             //console.log(response.data);
             // await dispatch(setVendor(response.data[0]));
             //await setVenders(response.data);
@@ -57,18 +58,6 @@ export default History = ({ navigation }) => {
         }
     };
 
-
-
-    // const onSearch = (text) => {
-    //     if (text === "") {
-    //         setItems(fetchItems);
-    //     }
-    //     console.log(text, 'text');
-    //     let newitems = fetcheditems.filter((item) => item.name.toLowerCase().search(text.toLowerCase()) !== -1);
-    //     console.log('newitem', newitems)
-    //     console.log('fitems', fetcheditems)
-    //     setItems(newitems);
-    // }
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = async () => {
@@ -76,23 +65,29 @@ export default History = ({ navigation }) => {
         await fetchHistory();
         setTimeout(() => {
             setRefreshing(false);
-          }, 500);
-      };
+        }, 500);
+    };
 
 
     return (
         <View style={styles.container}>
             <ScrollView style={{ flex: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.navigate('VC')}>
-                        <Ionicons name="arrow-back" size={32} color="black" />
+                {/* <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons
+                            name='arrow-back'
+                            size={24}
+                            color='black'
+                        // onPress={() => navigation.navigate('Address')}
+
+                        />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+                    <TouchableOpacity onPress={() => alert('menu pressed')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>Your Orders</Text>
+                    <Text style={styles.titleText}>History</Text>
                 </View>
                 {/* <View style={styles.divider} /> */}
                 <View style={{ marginBottom: 20 }}>
@@ -116,14 +111,37 @@ export default History = ({ navigation }) => {
                                         </View>
                                     )
                                 })}
-
-                                <View>
-                                    <Text style={{ fontWeight: '300', marginBottom: 5, marginTop: 10 }}>Order Time: {item.ordertime.split('T')[0]} {item.ordertime.split('T')[1].split('.')[0]}</Text>
+                                <View style={{ marginTop: 10, justifyContent: 'space-between' }}>
+                                    <Text style={{ fontWeight: '300' }}>Ordered by: {item.userid_fk.name}</Text>
+                                    <Text style={{ fontWeight: '300' }}>Hostel No: {item.userid_fk.hostel}</Text>
+                                    <Text style={{ fontWeight: '300' }}>Phone No: {item.userid_fk.phoneno}</Text>
+                                    <Text style={{ fontWeight: '300' }}>Order Time: {item.ordertime.split('T')[0]} {item.ordertime.split('T')[1].split('.')[0]}</Text>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
                                     <Text style={{ fontWeight: '900' }}>Status: {item.status}</Text>
                                     <Text style={{ fontWeight: '900' }}>Total: {item.orderitems.reduce((accumulator, currentValue) => accumulator + (currentValue.itemId_fk.price * currentValue.quantity), 0)}</Text>
                                 </View>
+
+
+                                <View style={{ backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', paddingTop: 20 }}>
+                                    <Pressable style={{ ...styles.status, backgroundColor: item.status === "In Queue" ? '#EFB60E' : '#D8D8D8' }} onPress={() => changeStatus('In Queue', item.id)}>
+                                        <Text style={styles.statustext}>In Queue</Text>
+                                    </Pressable>
+                                    <Pressable style={{ ...styles.status, backgroundColor: item.status === "Delivering" ? '#EFB60E' : '#D8D8D8' }} onPress={() => changeStatus('Delivering', item.id)}>
+                                        <Text style={styles.statustext} >Delivering</Text>
+                                    </Pressable>
+                                    <Pressable style={{ ...styles.status, backgroundColor: item.status === "Rider is Outside" ? '#EFB60E' : '#D8D8D8' }} onPress={() => changeStatus('Rider is Outside', item.id)}>
+                                        <Text style={styles.statustext} >Rider is Outside</Text>
+                                    </Pressable>
+                                    <Pressable style={{ ...styles.status, backgroundColor: item.status === "Delivered" ? '#EFB60E' : '#D8D8D8' }} onPress={() => changeStatus('Delivered', item.id)}>
+                                        <Text style={styles.statustext} >Delivered</Text>
+                                    </Pressable>
+                                    <Pressable style={{ ...styles.status, backgroundColor: item.status === "Canceled" ? 'red' : '#D8D8D8' }} onPress={() => changeStatus('Canceled', item.id)}>
+                                        <Text style={styles.statustext} >Cancel</Text>
+                                    </Pressable>
+                                </View>
+
                             </Pressable>
                         )
                     })}
@@ -140,7 +158,25 @@ const styles = StyleSheet.create({
         marginHorizontal: 50,
         marginVertical: 20,
     },
-    
+    status: {
+        backgroundColor: '#D8D8D8',
+        paddingVertical: 10,
+        width: '100%',
+        marginVertical: 5,
+        alignItems: 'center',
+        borderRadius: 20
+    },
+    statustext: {
+        fontSize: 20,
+        fontWeight: '500'
+    },
+    container: {
+        top: 40,
+        height: 740,
+        paddingTop: 20,
+        backgroundColor: '#F2F2F2',
+
+    },
     individualItem: {
         //backgroundColor: 'pink',
         alignItems: 'flex-start',
@@ -178,21 +214,19 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         paddingHorizontal: 25,
         paddingVertical: 10,
-
+        bottom: 10,
     },
     title: {
-        paddingHorizontal: 25,
-        justifyContent: 'space-between'
-    },
-    container: {
-        top: 40,
-        height: 740,
         backgroundColor: '#F2F2F2',
+        marginHorizontal: 25,
+        marginVertical: 20
+        // bottom: 20,
     },
     titleText: {
-        fontSize: 36,
+        fontSize: 40,
         fontWeight: 'bold'
     },
     search: {

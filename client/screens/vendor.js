@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, RefreshControl } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
-import burgericon from '../assets/burgericon.png';
+import burgericon from '../assets/pasta.png';
 import pizzaicon from '../assets/pizzaicon.png';
 import spaghettiicon from '../assets/spaghettiicon.png';
 import axios from 'axios';
@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { setVendor } from '../slices/vendor';
 import { useDispatch } from 'react-redux';
 import { BASEURL } from '@env';
+import { SetCart } from '../slices/cart';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -36,76 +38,72 @@ export default Screen2 = ({ navigation }) => {
         }
     }
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await fetchVendors();
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 500);
+    };
+
 
     return (
-        <View style={styles.container}>
-            <View style={styles.appBar}>
-                <MaterialIcons
-                    name='arrow-back'
-                    size={24}
-                    color='black'
-                    onPress={() => navigation.goBack()}
-                />
-            </View>
+        <View style={styles.maincontainer}>
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>Select A Vendor</Text>
+                </View>
 
-            <View style={styles.maincontainer}>
+
                 {venders.map((item) => {
                     return (
-                        <Pressable key={item.id} onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item))}}>
-                            <View style={styles.itemContainer}>
-                                <View style={styles.avatarContainer}>
-                                    <Avatar
-                                        rounded
-                                        size={80}
-                                        source={burgericon}
-                                        containerStyle={styles.avatar}
-                                    />
-                                    <View style={styles.textContainer}>
-                                        <Text style={styles.avatarText}>{item.name}</Text>
-                                        <View style={styles.yellowContainer}>
-                                            <Text style={styles.yellowText}>TUC</Text>
-                                        </View>
+                        <Pressable style={styles.itemContainer} key={item.id} onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item)); dispatch(SetCart({ cartItems: {} })) }}>
+
+                            <View style={styles.avatarContainer}>
+                                <Avatar
+                                    rounded
+                                    size={80}
+                                    source={burgericon}
+                                    containerStyle={styles.avatar}
+                                />
+                                <View style={styles.textContainer}>
+                                    <Text style={styles.avatarText}>{item.name}</Text>
+                                    <View style={styles.yellowContainer}>
+                                        <Text style={styles.yellowText}>TUC</Text>
                                     </View>
                                 </View>
                             </View>
                         </Pressable>
                     );
                 })}
-            </View>
+            </ScrollView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    textContainer: {
-        justifyContent: 'center',
-    },
     avatarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-
-    // maincontainer: {
-    //     top: 150,
-    //     color: 'white',
-    // },
     itemContainer: {
-        // top: 100,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFF',
         padding: 16,
-        margin: 16,
+
+        // marginLeft: 20,
         width: 350,
         alignSelf: 'center',
-        borderRadius: 8,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 2,
-        borderRadius: 30,
-        marginVertical: 20,
+        borderRadius: 20,
+        marginVertical: 10,
     },
     appBar: {
         position: 'absolute',
@@ -115,38 +113,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         height: 56,
         paddingHorizontal: 16,
-        // backgroundColor: '',
-        // elevation: 2,
     },
-    // container: {
-    //     // backgroundColor: '#EFB60E',
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     // alignItems: 'center',
-    //     // alignContent: 'center',
-    //     // alignSelf: 'center'
-
-    // },
-    // avatarContainer: {
-    //     marginVertical:40,
-    //     alignSelf: 'center',
-    //     marginBottom: 10,
-    // },
     text: {
         textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold',
         bottom: 20
     },
-    // avatar: {
-    //     marginVertical:20,
-    //     width: 120, // set the desired width of the Avatar
-    //     height: 120,
-    //     borderRadius: 60,
-    //     overflow: 'hidden',
-    //     justifyContent: 'center',
-    //     alignSelf:'center'
-    // },
+
     avatar: {
         marginRight: 16,
     },
@@ -167,13 +141,13 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     maincontainer: {
-        top: 200,
-        color: 'white',
-        // bottom: 20,
+        top: 40,
+
+        height: 740
     },
     container: {
         flex: 1,
-        backgroundColor: '#EFB60E',
+        backgroundColor: '#F2F2F2',
     },
     header: {
         top: 30,
@@ -209,10 +183,11 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     textContainer: {
+        marginLeft: 15,
         justifyContent: 'center',
     },
     avatarText: {
-        fontSize: 16,
+        fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 4,
     },
@@ -223,9 +198,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     yellowText: {
-        fontSize: 12,
+        fontSize: 15,
         fontWeight: 'bold',
         color: '#EFB60E',
+    },
+    title: {
+        margin: 25,
+
+        backgroundColor: '#F2F2F2',
+
+    },
+    titleText: {
+        fontSize: 40,
+        fontWeight: 'bold'
     },
 });
 

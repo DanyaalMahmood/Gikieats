@@ -44,7 +44,7 @@ export default function App() {
 
           <Stack.Screen name="Vendoritemform" component={Vendoritemform}/>
           <Stack.Screen name="Vendornewitemform" component={Vendornewitemform}/>
-          <Stack.Screen name="History" component={History}/>
+          
 
 
 
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFB60E',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: 50
+    paddingBottom: 50,
+    top: 40
   },
   text: {
     fontSize: 50,

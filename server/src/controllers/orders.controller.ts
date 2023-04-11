@@ -106,9 +106,8 @@ const createOrder = async (req: Request, res: Response) => {
 
         const newOrder = await prisma.order.create({
             data: {
-                status: 'in-queue',
+                status: 'In Queue',
                 userid: regno,
-                ordertime: String(new Date()),
                 assigned: '22',
                 vendorid: vendorId,
                 orderitems: {
@@ -209,6 +208,10 @@ const getHistory = async (req: Request, res: Response) => {
                         itemId_fk: true
                     }
                 },
+                userid_fk: true
+            },
+            orderBy: {
+                ordertime: "desc",
             }
         });
 
@@ -231,6 +234,18 @@ const getHistoryForUser = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'You are not a User' });
         }
 
+
+        const vendor = await prisma.vendor.findFirst({
+            where: {
+                id: vendorId
+            },
+        });
+
+        if (!vendor) {
+            return res.status(404).json({ error: 'Vendor not found' });
+        }
+
+
         const orders = await prisma.order.findMany({
             where: {
                 vendorid: vendorId,
@@ -242,6 +257,11 @@ const getHistoryForUser = async (req: Request, res: Response) => {
                         itemId_fk: true
                     }
                 },
+
+            },
+            orderBy: {
+                ordertime: 'desc'
+
             }
         });
 

@@ -3,31 +3,31 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Keyboard } from '
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
+import { useSelector } from 'react-redux';
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default Profile = ({ navigation }) => {
+    const user = useSelector((state) => state.user);
+
+
+    console.log(user);
     return (
 
-        <View style={{height: 750}} >
-        <ScrollView style = {{flex: 1}} contentContainerStyle={{ flexGrow: 1 }}>
-            
+        <View style={styles.container} >
+            <ScrollView style={{ flex: 1 }}>
+
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="arrow-back" size={24} color="black" />
+                    <TouchableOpacity onPress={() => navigation.navigate('VC')}>
+                        <Ionicons name="arrow-back" size={32} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+                        <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
                 </View>
-                <View style={styles.detailsHeader}>
-                    <View style={styles.profiletext}>
-                        <Text style={{ fontSize: 35, fontWeight: 'bold' }}>My Profile</Text>
-                    </View>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>Personal Details</Text>
                 </View>
 
-                <View style={styles.detailsHeader}>
-                    <Text style={styles.detailsHeaderText}>Personal Details</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.detailsHeaderText2}>Change</Text>
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.avatarcontainerwrapper}>
                     <View style={styles.avatarContainer}>
                         <Avatar
@@ -36,49 +36,35 @@ export default Profile = ({ navigation }) => {
                             source={myicon}
                         />
                         <View style={styles.textContainer}>
-                            <Text style={styles.nameText}>Muzamil Khatri</Text>
-                            <Text style={styles.emailText}>johndoe@gmail.com</Text>
-                            <Text style={styles.phoneText}>+92 321 8457 269</Text>
-                            <Text style={styles.locationText}>New York, NY</Text>
+                            <Text style={styles.nameText}>{user.name}</Text>
+                            <Text style={styles.emailText}>{user.email}</Text>
+                            <Text style={styles.phoneText}>{user.phoneno}</Text>
+                            <Text style={styles.locationText}>Hostel {user.hostel}</Text>
                         </View>
                     </View>
                 </View>
                 <TouchableOpacity
                     style={styles.buttonContainer}
-                    onPress={() => navigation.navigate('Item')}
+                    onPress={() => navigation.navigate('History')}
                 >
                     <Text style={styles.buttonText}>Orders</Text>
                     <Ionicons name="arrow-forward" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonContainer}
-                    onPress={() => navigation.navigate('VC')}
+                    onPress={() => alert('Not Implented Yet')}
                 >
                     <Text style={styles.buttonText}>Pending reviews</Text>
                     <Ionicons name="arrow-forward" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonContainer}
-                    onPress={() => navigation.navigate('VC')}
+                    onPress={() => alert('Not Implented Yet')}
                 >
                     <Text style={styles.buttonText}>Faq</Text>
                     <Ionicons name="arrow-forward" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => navigation.navigate('Cart')}
-                >
-                    <Text style={styles.buttonText}>Help</Text>
-                    <Ionicons name="arrow-forward" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => navigation.navigate('Cart')}
-                >
-                    <Text style={styles.buttonText}>Help</Text>
-                    <Ionicons name="arrow-forward" size={24} color="black" />
-                </TouchableOpacity>
-        </ScrollView>
+            </ScrollView>
         </View>
     );
 
@@ -89,7 +75,6 @@ const styles = StyleSheet.create({
         width: 120, // set the desired width of the Avatar
         height: 120,
         borderRadius: 60,
-        overflow: 'hidden'
     },
     avatarcontainerwrapper: {
         backgroundColor: 'white',
@@ -99,25 +84,34 @@ const styles = StyleSheet.create({
         marginVertical: 14,
         width: 350,
         alignSelf: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 40
     },
     profiletext: {
         fontSize: 35,
         fontWeight: 'bold',
         marginLeft: 25,
     },
-    container: {
-        top: 50,
-        // flexGrow: 1,
-        backgroundColor: '#F5F5F8',
-    },
     header: {
-        top: 30,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        paddingBottom: 8,
+        paddingHorizontal: 25,
+        paddingVertical: 10,
+
+    },
+    title: {
+        //backgroundColor: '#F2F2F2',
+        paddingHorizontal: 25,
+        justifyContent: 'space-between'
+    },
+    titleText: {
+        fontSize: 36,
+        fontWeight: 'bold'
+    },
+    container: {
+        top: 40,
+        height: 740,
+        backgroundColor: '#F2F2F2',
     },
     headerTitle: {
         fontSize: 18,
@@ -143,18 +137,16 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
     },
     avatarContainer: {
-        // height: 200,
-        left: 20,
-        bottom: 15,
+
         flexDirection: 'row',
         alignItems: 'center',
-        // marginHorizontal: 16,
+        justifyContent: 'space-between',
+
         marginVertical: 20,
 
     },
     textContainer: {
-        marginTop: 35,
-        marginLeft: 16,
+        
     },
     nameText: {
         fontSize: 16,

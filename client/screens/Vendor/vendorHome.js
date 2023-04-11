@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './../profile';
 import VendorList from './vendorlist';
+import VendorHistory from './vendorhistory';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +13,7 @@ export default function VendorHome({ navigation, route }) {
         <Tab.Navigator initialRouteName='VendorList' screenOptions={{tabBarShowLabel: true, headerShown: false}} tabBar={(props) => <Tabbar {...props}/>} >
 
             <Tab.Screen name="VendorList" component={VendorList}/>
-            <Tab.Screen name="Profile" component={Profile}/>
+            <Tab.Screen name="VendorHistory" component={VendorHistory}/>
         </Tab.Navigator>
     );
 }
@@ -28,7 +29,7 @@ const Tabbar = ({state, navigation}) => {
     if (currentRoute === 'VendorList') {
         b1 = {...b1, ...styles.buttonSelected}
     }
-    if (currentRoute === 'Profile') {
+    if (currentRoute === 'VendorHistory') {
         b3 = {...b3, ...styles.buttonSelected}
     }
     
@@ -41,7 +42,7 @@ const Tabbar = ({state, navigation}) => {
                         source={require('./../../img/homeicon.png')}
                     />
                 </Pressable>
-                <Pressable style={b3} onPress={() => navigation.navigate('History')}>
+                <Pressable style={b3} onPress={() => navigation.navigate('VendorHistory')}>
                     <Image
                         style={styles.image}
                         source={require('./../../img/historyicon.png')}

@@ -47,6 +47,7 @@ export default function SUform({ navigation }) {
 
     return (
         <View style={styles.container}>
+
             <View style={styles.scrollable}>
                 <ScrollView>
                     <View style={styles.email}>
@@ -81,12 +82,13 @@ export default function SUform({ navigation }) {
                         <Text>Password</Text>
                         <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} />
                     </View>
-                    <View style={styles.password}>
+                    <View style={{...styles.password, marginBottom: 100}}>
                         <Text>Confirm Password</Text>
                         <TextInput style={styles.input} value={confirm} onChangeText={(text) => setconfirm(text)} secureTextEntry={true} />
                     </View>
 
                 </ScrollView>
+
             </View>
             <View style={styles.error}>
                 <Text style={styles.errortext}>{error}</Text>
