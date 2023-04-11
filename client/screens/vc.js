@@ -8,7 +8,7 @@ export default function VC({navigation, route}) {
 
       <Image
         style={styles.stretch}
-        source={require('./../img/restaurant1.png')}
+        source={require('./../assets/gikieats.png')}
       />
 
 
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     fontSize: 100,
-    backgroundColor: '#EFB60E',
+    backgroundColor: '#ece5db',
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingBottom: 50
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
   stretch: {
-    width: 400,
-    height: 400,
+    width: 350,
+    height: 350,
     resizeMode: 'contain',
     bottom: 290
   }
