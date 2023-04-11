@@ -137,6 +137,9 @@ export default VendorHistory = ({ navigation }) => {
                                     <Pressable style={{ ...styles.status, backgroundColor: item.status === "Delivered" ? '#EFB60E' : '#D8D8D8' }} onPress={() => changeStatus('Delivered', item.id)}>
                                         <Text style={styles.statustext} >Delivered</Text>
                                     </Pressable>
+                                    <Pressable style={{ ...styles.status, backgroundColor: item.status === "Canceled" ? 'red' : '#D8D8D8' }} onPress={() => changeStatus('Canceled', item.id)}>
+                                        <Text style={styles.statustext} >Cancel</Text>
+                                    </Pressable>
                                 </View>
 
                             </Pressable>
