@@ -6,7 +6,7 @@ import myicon from '../assets/myicon.png';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { BASEURL } from '@env';
+import BASEURL from '../assets/baseurl';
 
 
 import Fastfood from './menuScreens/fastfood';

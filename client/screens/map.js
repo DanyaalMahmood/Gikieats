@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import map from '../assets/map.png';
 import burger from '../assets/burger.png';
 import myicon from '../assets/myicon.png';
-import { BASEURL } from '@env';
+import BASEURL from '../assets/baseurl';
 import axios from 'axios';
 import { useSelector, useDispatch} from 'react-redux';
 import { SetCart } from '../slices/cart';

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useState } from 'react';
-import { BASEURL } from '@env';
+import BASEURL from './../../assets/baseurl';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../slices/user';
 import axios from 'axios';

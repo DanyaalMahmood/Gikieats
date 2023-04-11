@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
-import { BASEURL } from '@env';
+import BASEURL from './../../assets/baseurl';
 import { useIsFocused } from '@react-navigation/native'
 
 

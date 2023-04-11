@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'rea
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
-import { BASEURL } from '@env';
+import BASEURL from './../../assets/baseurl';
 import axios from 'axios';
 
 export default function Vendoritemform({ navigation, route }) {

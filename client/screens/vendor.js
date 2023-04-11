@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { setVendor } from '../slices/vendor';
 import { useDispatch } from 'react-redux';
-import { BASEURL } from '@env';
+import BASEURL from '../assets/baseurl';
 import { SetCart } from '../slices/cart';
 import { ScrollView } from 'react-native-gesture-handler';
 

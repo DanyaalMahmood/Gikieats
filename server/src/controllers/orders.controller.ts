@@ -79,13 +79,7 @@ interface OrderItem {
     quantity: String;
 }
 
-interface Order {
-    id: String;
-    assigned: String;
-    status: String;
-    userid: String;
-    ordertime: String;
-}
+
 
 const createOrder = async (req: Request, res: Response) => {
     const body: { item: string, quantity: string }[] = req.body;
@@ -108,7 +102,6 @@ const createOrder = async (req: Request, res: Response) => {
             data: {
                 status: 'In Queue',
                 userid: regno,
-                assigned: '22',
                 vendorid: vendorId,
                 orderitems: {
                     createMany: {

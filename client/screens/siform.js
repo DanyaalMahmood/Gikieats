@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Button, Pressable, Image, TextInput } from 'rea
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../slices/user';
-import {BASEURL} from '@env';
+import BASEURL from '../assets/baseurl';
 import axios from 'axios';
 
 
@@ -17,7 +17,7 @@ export default function SIform({navigation}) {
 
     const handleSubmit = async () => {
         try {
-            //console.log(`${BASEURL}`)
+            console.log(`${BASEURL}`)
             const response = await axios.post(`${BASEURL}/user/signin`, {email, password});
             await dispatch(login(response.data));
             alert(`You are logged in as ${response.data.name}`);
