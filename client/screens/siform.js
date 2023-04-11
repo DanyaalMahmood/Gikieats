@@ -35,11 +35,19 @@ export default function SIform({navigation}) {
         <View style={styles.container}>
             <View style={styles.email}>
                 <Text>Email Address</Text>
-                <TextInput style={styles.input} value={email} onChangeText={(text) => setEmail(text)}/>
+                <TextInput style={styles.input} value={email} onChangeText={(text) => setEmail(text)} keyboardType="email-address" autoCapitalize='none'
+                    autoCorrect={false}
+                    onBlur={() => {
+                        if (!email.includes('@') || !email.endsWith('.com')) {
+                            setError('Invalid email address');
+                        } else {
+                            setError('');
+                        }
+                    }} />
             </View>
             <View style={styles.password}>
                 <Text>Password</Text>
-                <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)}/>
+                <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)} secureTextEntry={true} />
             </View>
             <View style={styles.error}>
                 <Text style={styles.errortext}>{error}</Text>

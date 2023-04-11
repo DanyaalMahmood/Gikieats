@@ -234,6 +234,7 @@ const getHistoryForUser = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'You are not a User' });
         }
 
+
         const vendor = await prisma.vendor.findFirst({
             where: {
                 id: vendorId
@@ -243,6 +244,7 @@ const getHistoryForUser = async (req: Request, res: Response) => {
         if (!vendor) {
             return res.status(404).json({ error: 'Vendor not found' });
         }
+
 
         const orders = await prisma.order.findMany({
             where: {
@@ -255,9 +257,11 @@ const getHistoryForUser = async (req: Request, res: Response) => {
                         itemId_fk: true
                     }
                 },
+
             },
             orderBy: {
                 ordertime: 'desc'
+
             }
         });
 
