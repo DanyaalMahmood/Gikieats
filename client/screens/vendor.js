@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, RefreshControl } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
 import burgericon from '../assets/pasta.png';
@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { setVendor } from '../slices/vendor';
 import { useDispatch } from 'react-redux';
 import { BASEURL } from '@env';
+import { SetCart } from '../slices/cart';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -36,18 +38,29 @@ export default Screen2 = ({ navigation }) => {
         }
     }
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await fetchVendors();
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 500);
+    };
+
 
     return (
         <View style={styles.maincontainer}>
-            <View style={styles.title}>
-                <Text style={styles.titleText}>Select A Vendor</Text>
-            </View>
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>Select A Vendor</Text>
+                </View>
 
 
-            {venders.map((item) => {
-                return (
-                    <Pressable key={item.id} onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item)) }}>
-                        <View style={styles.itemContainer}>
+                {venders.map((item) => {
+                    return (
+                        <Pressable style={styles.itemContainer} key={item.id} onPress={() => { navigation.navigate('UserHome'); dispatch(setVendor(item)); dispatch(SetCart({ cartItems: {} })) }}>
+
                             <View style={styles.avatarContainer}>
                                 <Avatar
                                     rounded
@@ -62,10 +75,10 @@ export default Screen2 = ({ navigation }) => {
                                     </View>
                                 </View>
                             </View>
-                        </View>
-                    </Pressable>
-                );
-            })}
+                        </Pressable>
+                    );
+                })}
+            </ScrollView>
         </View>
     );
 };
@@ -76,23 +89,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     itemContainer: {
-        top: 20,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFF',
         padding: 16,
-        margin: 16,
+
         // marginLeft: 20,
         width: 350,
         alignSelf: 'center',
-        borderRadius: 8,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 2,
         elevation: 2,
-        borderRadius: 30,
-        marginVertical: 20,
+        borderRadius: 20,
+        marginVertical: 10,
     },
     appBar: {
         position: 'absolute',
@@ -109,15 +120,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         bottom: 20
     },
-    // avatar: {
-    //     marginVertical:20,
-    //     width: 120, // set the desired width of the Avatar
-    //     height: 120,
-    //     borderRadius: 60,
-    //     overflow: 'hidden',
-    //     justifyContent: 'center',
-    //     alignSelf:'center'
-    // },
+
     avatar: {
         marginRight: 16,
     },
@@ -138,9 +141,9 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     maincontainer: {
-        top: 20,
-        color: 'white',
-        // bottom: 20,
+        top: 40,
+
+        height: 740
     },
     container: {
         flex: 1,
@@ -200,14 +203,10 @@ const styles = StyleSheet.create({
         color: '#EFB60E',
     },
     title: {
-        padding: 16,
-        margin: 16,
-        // top: 10,
+        margin: 25,
+
         backgroundColor: '#F2F2F2',
-        // paddingHorizontal: 25,
-        height: 100,
-        // alignSelf: 'center',
-        // bottom: 40,
+
     },
     titleText: {
         fontSize: 40,

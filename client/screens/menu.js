@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, RefreshControl } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
@@ -74,7 +74,7 @@ export default Menu = ({ navigation }) => {
     }
 
     const onSearch = (text) => {
-        if(text === "") {
+        if (text === "") {
             setItems(fetchItems);
         }
         console.log(text, 'text');
@@ -84,21 +84,29 @@ export default Menu = ({ navigation }) => {
         setItems(newitems);
     }
 
+    const [refreshing, setRefreshing] = useState(false);
 
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await fetchItems();
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 500);
+    };
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => alert('menu pressed')}>
-                        <Ionicons name="menu-outline" size={32} color="black" />
+                    <TouchableOpacity onPress={() => navigation.navigate('VC')}>
+                        <Ionicons name="arrow-back" size={32} color="black" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>Delicious             food for you</Text>
+                    <Text style={styles.titleText}>Food items from  {vendor.name}</Text>
                 </View>
                 <View style={styles.search}>
                     <Ionicons name="search-outline" size={32} color="black" />
@@ -157,19 +165,17 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         paddingHorizontal: 25,
         paddingVertical: 10,
-        bottom: 10,
+
     },
     title: {
         backgroundColor: '#F2F2F2',
         paddingHorizontal: 25,
-        height: 100,
-        bottom: 20,
+        justifyContent: 'space-between',
     },
     titleText: {
-        fontSize: 40,
+        fontSize: 36,
         fontWeight: 'bold'
     },
     search: {

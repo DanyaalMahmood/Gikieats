@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, RefreshControl} from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import myicon from '../assets/myicon.png';
@@ -69,62 +69,64 @@ export default History = ({ navigation }) => {
     //     console.log('fitems', fetcheditems)
     //     setItems(newitems);
     // }
+    const [refreshing, setRefreshing] = useState(false);
 
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await fetchHistory();
+        setTimeout(() => {
+            setRefreshing(false);
+          }, 500);
+      };
 
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <MaterialIcons
-                            name='arrow-back'
-                            size={24}
-                            color='black'
-                        // onPress={() => navigation.navigate('Address')}
-
-                        />
+                    <TouchableOpacity onPress={() => navigation.navigate('VC')}>
+                        <Ionicons name="arrow-back" size={32} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => alert('menu pressed')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>History</Text>
+                    <Text style={styles.titleText}>Your Orders</Text>
                 </View>
                 {/* <View style={styles.divider} /> */}
-                <View style={{marginBottom:20}}>
-                {history.map((item) => {
-                    return (
-                        <Pressable key={item.id} style={styles.itemss} onPress={() => { null }}>
-                            <View>
-                                <Text style={{fontSize: 8, alignSelf: 'center', marginBottom: 10}}>OrderID: {item.id}</Text>
-                            </View>
-                            {item.orderitems.map((order) => {
-                                return (
-                                    <View key={order.id} style={styles.itemouter}>
+                <View style={{ marginBottom: 20 }}>
+                    {history.map((item) => {
+                        return (
+                            <Pressable key={item.id} style={styles.itemss} onPress={() => { null }}>
+                                <View>
+                                    <Text style={{ fontSize: 8, alignSelf: 'center', marginBottom: 10 }}>OrderID: {item.id}</Text>
+                                </View>
+                                {item.orderitems.map((order) => {
+                                    return (
+                                        <View key={order.id} style={styles.itemouter}>
 
-                                        <View style={styles.individualItem}>
-                                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{order.itemId_fk.name}</Text>
-                                            <Text style={{ fontSize: 20 }}>x {order.quantity}</Text>
+                                            <View style={styles.individualItem}>
+                                                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{order.itemId_fk.name}</Text>
+                                                <Text style={{ fontSize: 20 }}>x {order.quantity}</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={{ fontWeight: 'bold', color: '#EFB60E', fontSize: 16 }}>Rs {order.itemId_fk.price * order.quantity}</Text>
+                                            </View>
                                         </View>
-                                        <View>
-                                            <Text style={{ fontWeight: 'bold', color: '#EFB60E', fontSize: 16 }}>Rs {order.itemId_fk.price * order.quantity}</Text>
-                                        </View>
-                                    </View>
-                                )
-                            })}
+                                    )
+                                })}
 
-                            <View>
-                                <Text style={{fontWeight: '300', marginBottom: 5, marginTop: 10}}>Order Time: {item.ordertime.split('T')[0]} {item.ordertime.split('T')[1].split('.')[0]}</Text>
-                            </View>
-                            <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
-                                <Text style={{fontWeight: '900'}}>Status: {item.status}</Text>
-                                <Text style={{fontWeight: '900'}}>Total: {item.orderitems.reduce((accumulator, currentValue) => accumulator + (currentValue.itemId_fk.price * currentValue.quantity), 0)}</Text>
-                            </View>
-                        </Pressable>
-                    )
-                })}
+                                <View>
+                                    <Text style={{ fontWeight: '300', marginBottom: 5, marginTop: 10 }}>Order Time: {item.ordertime.split('T')[0]} {item.ordertime.split('T')[1].split('.')[0]}</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontWeight: '900' }}>Status: {item.status}</Text>
+                                    <Text style={{ fontWeight: '900' }}>Total: {item.orderitems.reduce((accumulator, currentValue) => accumulator + (currentValue.itemId_fk.price * currentValue.quantity), 0)}</Text>
+                                </View>
+                            </Pressable>
+                        )
+                    })}
                 </View>
             </ScrollView>
         </View>
@@ -138,13 +140,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 50,
         marginVertical: 20,
     },
-    container: {
-        top: 40,
-        height: 740,
-        paddingTop: 20,
-        backgroundColor: '#F2F2F2',
-
-    },
+    
     individualItem: {
         //backgroundColor: 'pink',
         alignItems: 'flex-start',
@@ -182,19 +178,21 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
         paddingHorizontal: 25,
         paddingVertical: 10,
-        bottom: 10,
+
     },
     title: {
-        backgroundColor: '#F2F2F2',
         paddingHorizontal: 25,
-        height: 70,
-        // bottom: 20,
+        justifyContent: 'space-between'
+    },
+    container: {
+        top: 40,
+        height: 740,
+        backgroundColor: '#F2F2F2',
     },
     titleText: {
-        fontSize: 40,
+        fontSize: 36,
         fontWeight: 'bold'
     },
     search: {
