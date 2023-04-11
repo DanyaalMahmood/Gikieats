@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, ScrollView, RefreshControl } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,9 +8,7 @@ import axios from 'axios';
 import { BASEURL } from '@env';
 import { useIsFocused } from '@react-navigation/native'
 
-import Fastfood from './../menuScreens/fastfood';
-import Desifood from './../menuScreens/desifood';
-import Otheritems from './../menuScreens/otheritems';
+
 import { SetItem } from '../../slices/item';
 
 export default VendorList = ({ navigation, route }) => {
@@ -56,18 +54,27 @@ export default VendorList = ({ navigation, route }) => {
         setItems(newitems);
     }
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await fetchItems();
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 500);
+    };
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{ flex: 1 }}>
-                <View style={styles.header}>
+            <ScrollView style={{ flex: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                {/* <View style={styles.header}>
                     <TouchableOpacity onPress={() => alert('menu pressed')}>
                         <Ionicons name="menu-outline" size={32} color="black" />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => alert('menu pressed')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <View style={styles.title}>
                     <Text style={styles.titleText}>Your Food                          Items</Text>
                 </View>
@@ -113,13 +120,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 25,
         paddingVertical: 10,
-        height: 80
+
     },
     title: {
         backgroundColor: '#F2F2F2',
         paddingHorizontal: 25,
-        height: 100,
-        bottom: 20,
+        marginTop: 20
     },
     titleText: {
         fontSize: 40,

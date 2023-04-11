@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Pressable, RefreshControl } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
@@ -14,11 +14,9 @@ import { useIsFocused } from '@react-navigation/native';
 
 
 export default VendorHistory = ({ navigation }) => {
-    const [search, setSearch] = useState('');
+
     const [history, setHistory] = useState([]);
 
-    //const [fetcheditems, fetchedsetItems] = useState([]);
-    console.log('page refreshed');
 
     const isFocused = useIsFocused();
 
@@ -29,22 +27,13 @@ export default VendorHistory = ({ navigation }) => {
         };
     }, [isFocused]);
 
-    useEffect(() => {
-    }, [history]);
-
 
     const changeStatus = async (status, orderId) => {
         console.log('status change', status, orderId);
         try {
             const response = await axios.post(`${BASEURL}/order/update/${orderId}`, {status});
-            //console.log(response.data);
-            // await dispatch(setVendor(response.data[0]));
-            //await setVenders(response.data);
-            // await setItems(response.data);
-            // await fetchedsetItems(response.data);
             console.log('order complete', response.data);
             fetchHistory();
-
 
         } catch (err) {
             console.log(err);
@@ -52,10 +41,6 @@ export default VendorHistory = ({ navigation }) => {
         }
     };
 
-
-
-
-    const dispatch = useDispatch();
 
     const fetchHistory = async () => {
         try {
@@ -73,12 +58,21 @@ export default VendorHistory = ({ navigation }) => {
         }
     };
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        await fetchHistory();
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 500);
+    };
 
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{ flex: 1 }}>
-                <View style={styles.header}>
+            <ScrollView style={{ flex: 1 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                {/* <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons
                             name='arrow-back'
@@ -91,7 +85,7 @@ export default VendorHistory = ({ navigation }) => {
                     <TouchableOpacity onPress={() => alert('menu pressed')}>
                         <Ionicons name="cart-outline" size={32} color="black" />
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <View style={styles.title}>
                     <Text style={styles.titleText}>History</Text>
                 </View>
@@ -224,8 +218,8 @@ const styles = StyleSheet.create({
     },
     title: {
         backgroundColor: '#F2F2F2',
-        paddingHorizontal: 25,
-        height: 70,
+        marginHorizontal: 25,
+        marginVertical: 20
         // bottom: 20,
     },
     titleText: {
