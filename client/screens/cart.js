@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     title: {
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#F5F5F8',
         marginTop: 100,
         marginHorizontal: 25,
         height: 60,

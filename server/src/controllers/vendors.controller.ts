@@ -70,7 +70,7 @@ const vendorSignup = async (req: Request, res: Response) => {
 
         if (typeof (secret) === "string") {
 
-            const tokenbody = { name: createdVendor.name, vendorid: createdVendor.phoneno };
+            const tokenbody = { name: createdVendor.name, phoneno: createdVendor.phoneno };
             const token = await jwt.sign(tokenbody, secret, {
                 expiresIn: 3 * 24 * 60 * 60,
             });

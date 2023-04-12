@@ -5,7 +5,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { BASEURL } from '@env';
+import BASEURL from './../../assets/baseurl';
 
 
 

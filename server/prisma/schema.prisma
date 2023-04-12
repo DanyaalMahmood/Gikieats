@@ -26,7 +26,6 @@ model Vendor {
   password String
   phoneno  String
   items    Item[]
-  riders   Rider[]
   orders   Order[]
 }
 
@@ -54,23 +53,21 @@ model OrderItem {
 
 model Order {
   id             String  @id @default(uuid())
-  assigned       String  @default("22")
   status         String
   userid         String
   ordertime      DateTime? @default(now())
   vendorid       String
   vendor_fk      Vendor @relation(fields: [vendorid], references:[id])
-  assigned_fk    Rider  @relation(fields: [assigned], references: [id])
   userid_fk      User  @relation(fields: [userid], references: [regno])
   orderitems     OrderItem[]
   
 }
 
-model Rider {
-  id             String @id @default(uuid())
-  name           String
-  phoneno        String
-  vendorid       String
-  vendorid_fk    Vendor @relation(fields: [vendorid], references: [id])
-  assigned       Order[]
-}
+// model Rider {
+//   id             String @id @default(uuid())
+//   name           String
+//   phoneno        String
+//   vendorid       String
+//   vendorid_fk    Vendor @relation(fields: [vendorid], references: [id])
+//   assigned       Order[]
+// }

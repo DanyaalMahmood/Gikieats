@@ -1,31 +1,64 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Pressable, Image } from 'react-native';
 
-export default function VC({navigation, route}) {
+import { MotiView } from 'moti'
+
+export const FadeInLogo = () => (
+  <MotiView
+    from={{ opacity: 0, bottom: 800 }}
+    animate={{ opacity: 1, bottom: 180 }}
+    transition={{ type: 'timing', duration: 1000, delay: 500 }}
+  >
+    <Image
+      style={styles.stretch}
+      source={require('./../assets/gikieats.png')}
+    />
+
+  </MotiView>
+)
+
+export const Button1 = ({navigation}) => (
+  <MotiView
+    from={{ left: 1000 }}
+    animate={{ left: 0 }}
+    transition={{ type: 'spring', delay: 1500 }}
+    style={styles.vendor}
+  >
+    <Pressable style={{ flex: 1, width: '100%',justifyContent: 'center', alignItems: 'center' }} onPress={() => { navigation.navigate('VendorSi') }}>
+
+      <Text style={styles.buttonText}>
+        Vendor
+      </Text>
+    </Pressable>
+
+  </MotiView>
+)
+export const Button2 = ({navigation}) => (
+  <MotiView
+    from={{ left: 1000 }}
+    animate={{ left: 0 }}
+    transition={{ type: 'spring', delay: 2000 }}
+    style={styles.customer}
+  >
+    <Pressable style={{flex: 1, width: '100%',justifyContent: 'center', alignItems: 'center'}} onPress={() => { navigation.navigate('Signin') }}>
+
+      <Text style={styles.buttonText}>
+        Customer
+      </Text>
+    </Pressable>
+
+  </MotiView>
+)
+
+
+export default function VC({ navigation, route }) {
   return (
-    
+
     <View style={styles.container}>
 
-      <Image
-        style={styles.stretch}
-        source={require('./../assets/gikieats.png')}
-      />
-
-
-      <Pressable style={styles.vendor} onPress={() => {navigation.navigate('VendorSi')}}>
-
-        <Text style={styles.buttonText}>
-          Vendor
-        </Text>
-      </Pressable>
-
-      <Pressable style={styles.customer} onPress={() => {navigation.navigate('Signin')}}>
-
-        <Text style={styles.buttonText}>
-          Customer
-        </Text>
-      </Pressable>
-      <StatusBar style="auto" />
+      <FadeInLogo />
+      <Button1 navigation={navigation}/>
+      <Button2 navigation={navigation}/>
     </View>
   );
 }
@@ -52,8 +85,7 @@ const styles = StyleSheet.create({
     height: 75,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 200
+    bottom: 20
   },
   customer: {
     backgroundColor: '#ffffff',
@@ -62,18 +94,16 @@ const styles = StyleSheet.create({
     height: 75,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    bottom: 100
   },
   buttonText: {
     color: '#EFB60E',
     fontSize: 20,
-    fontWeight: '500'
+    fontWeight: '900'
+
   },
   stretch: {
     width: 350,
     height: 350,
     resizeMode: 'contain',
-    bottom: 290
   }
 });

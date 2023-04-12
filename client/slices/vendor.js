@@ -9,6 +9,7 @@ export const VendorSlice = createSlice({
     setVendor: (state, action) => {
       state.id = action.payload.id;
       state.name = action.payload.name;
+      state.phoneno = action.payload.phoneno;
     },
   }
 })
