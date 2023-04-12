@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "Gikieats",
+    "slug": "Gikieats",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    
+    "icon": "./assets/logomain.jpeg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,14 +18,16 @@
       "supportsTablet": true
     },
     "android": {
-      "softwareKeyboardLayoutMode": "pan",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "package": "gikieats.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c6082b40-e3fd-4f01-8e72-05185b059660"
+      }
+    },
+    "owner": "danyaalmahmood"
   }
 }

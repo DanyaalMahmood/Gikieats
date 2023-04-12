@@ -24,7 +24,6 @@
     "moti": "^0.24.2",
     "react": "18.2.0",
     "react-native": "0.71.6",
-    "react-native-android-keyboard-adjust": "^1.2.0",
     "react-native-dotenv": "^3.4.8",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.9.0",
