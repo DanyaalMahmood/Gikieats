@@ -1,3 +1,6 @@
+## Demo
+https://user-images.githubusercontent.com/110989303/232171633-0e1357eb-e3a1-40b3-8c70-de6806174f1f.mp4
+
 # Food App
 This is a mobile application built using React Native, where customers and vendors can interact. The app allows vendors to sell items, add items, and update items, while customers can order items, see menus, and order from different vendors.
 
@@ -11,7 +14,7 @@ Customers can rate and review vendors.
 
 ## Installation
 Clone the repository:
-git clone https://github.com/AhmadMaazz/Gikieats.git
+git clone https://github.com/DanyaalMahmood/Gikieats.git
 
 Install dependencies:
 
@@ -25,18 +28,10 @@ npm start
 Download the Expo Go app on your mobile device.
 Scan the QR code displayed in the terminal or browser.
 
-## Demo Pictures
-![IMG_2666](https://user-images.githubusercontent.com/104638885/231219911-73ff30c9-ed69-4485-9fdc-e28dad38604f.PNG)
-![IMG_2668](https://user-images.githubusercontent.com/104638885/231219949-0a3128bb-dc76-44a4-b594-a07db5ed589f.PNG)
-![IMG_2680](https://user-images.githubusercontent.com/104638885/231220046-1aadf894-eafc-4e49-a56f-b04b7ac5c963.PNG)
-![IMG_2682](https://user-images.githubusercontent.com/104638885/231220067-ac58e0e8-1425-4514-ab57-e693123c811e.PNG)
-![IMG_2684](https://user-images.githubusercontent.com/104638885/231220128-3c190018-e6d5-456a-a129-dd344ed61772.PNG)
-
 
 Technologies Used
-React Native
-Expo
-Node Js
+- React Native
+- Node Js
   
 ## Contributing
 Contributions are welcome. Please feel free to open an issue or submit a pull request.
